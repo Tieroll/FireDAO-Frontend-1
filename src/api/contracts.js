@@ -3,8 +3,6 @@ import reducer from "./reducer"
 import initState from "./initState"
 import getWeb3 from "./getWeb3";
 import {notification} from "antd";
-import BigNumber from "bignumber.js";
-import {ETHDecimals} from "../config/constants"
 const openNotification = (message) => {
     notification.error({
         message: message,
@@ -25,47 +23,38 @@ const connect = async (state, dispatch) => {
 
     dispatch({type: 'CONNECT_INIT'});
 
-    await window.ethereum
-        .request({method: 'eth_requestAccounts'})
-    await getWeb3().then(result => {
-        dispatch({type: "CONNECT", payload: result.web3})
 
-        window.ethereum.on('accountsChanged', (accounts) => {
-            dispatch({type: "SET_ACCOUNT", payload: accounts[0]})
-            result.web3.eth.getAccounts().then(async res=>{
-                let balance =await result.web3.eth.getBalance(res[0])
-                dispatch({type:"SET_ETHBALANCE",payload:BigNumber(balance).dividedBy(10**ETHDecimals)})
-            })
-        });
-        window.ethereum.on('chainChanged', () => {
-            result.web3.eth.getAccounts().then(async res=>{
-                let balance =await result.web3.eth.getBalance(res[0])
-                dispatch({type:"SET_ETHBALANCE",payload:BigNumber(balance).dividedBy(10**ETHDecimals)})
-            })
+    try{
+        await getWeb3().then(result => {
+            dispatch({type: "CONNECT", payload: result.web3})
 
-        });
+            window.ethereum.on('accountsChanged', (accounts) => {
+                dispatch({type: "SET_ACCOUNT", payload: accounts[0]})
+                result.web3.eth.getAccounts().then(async res=>{
+                    let balance =await result.web3.eth.getBalance(res[0])
+                    dispatch({type:"SET_ETHBALANCE",payload:balance/10**18})
+                })
+            });
+            window.ethereum.on('chainChanged', (netWarkId) => {
+                dispatch({type: "SET_NETWORKID", payload: netWarkId})
+                result.web3.eth.getAccounts().then(async res=>{
+                    let balance =await result.web3.eth.getBalance(res[0])
+                    dispatch({type:"SET_ETHBALANCE",payload:balance/10**18})
+                })
 
-        result.web3.eth.net.getId().then(async netWarkId => {
-            dispatch({type: "SET_NETWORKID", payload: netWarkId})
-        })
-        result.web3.eth.getAccounts().then(async res=>{
-            let balance =await result.web3.eth.getBalance(res[0])
-            dispatch({type:"SET_ETHBALANCE",payload: BigNumber(balance).dividedBy(10**ETHDecimals)})
-        })
-
-        result.web3.eth.getCoinbase().then(account => {
-            if(account){
-                dispatch({type: "SET_ACCOUNT", payload: account})
-                if(account){
+            });
+            window.ethereum.request({ method: "eth_requestAccounts" }).then(async (accounts) => {
+                if (accounts && accounts.length > 0) {
+                    dispatch({type: "SET_ACCOUNT", payload: accounts[0]})
                     dispatch({type: "CONNECT_SUCCESS"})
                 }
-            }else{
-                openNotification("connect failed")
-            }
+
+            });
 
         })
-
-    })
+    }catch (e){
+        console.log(e)
+    }
 
 }
 
