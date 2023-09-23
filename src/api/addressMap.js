@@ -25,6 +25,7 @@ import autolp from "../abi/autolp.json"
 import seedDonation from "../abi/seedDonation.json"
 import FLMExchange from "../abi/FLMExchange.json"
 import FLMAirdrop from "../abi/FLMAirdrop.json"
+import ogV9 from "../abi/arbog.json"
 let CONTRACTS
 CONTRACTS = {
     erc20: {address: "0x46B85F2E50BFB50F4F78d29e98E679a859d5F839", abi: erc20Abi},
@@ -40,6 +41,8 @@ CONTRACTS = {
     airdrop: {address: "0xcB9F989490a2084944323C727d159A4D4baA07C9", abi: airdrop},
     PrivateExchangePoolOG: {address: "0x65d741A9d21cA93AB8aC202b7e6693AE3656CEFa", abi: PrivateExchangePoolOG},
     PrivateExchangePoolOGV5: {address: "0x9B635aC49F76662b5a7b8BC02C664Aa3a6EBAd76", abi: PrivateExchangePoolOGV5},
+    ogV9: {address: "0x388C99E4A51918598A6caAc769E9118FD1fee890", abi: ogV9},
+
 
     TreasuryDistribution: {address: "0xA8FcF03CDEc12CF19767d12aC4c627FF6e5D1c21", abi: TreasuryDistribution},
     Guild: {address: "0xD75a1A6F27993571048C17FD1D346a36DD38E6Bd", abi: Guild},
