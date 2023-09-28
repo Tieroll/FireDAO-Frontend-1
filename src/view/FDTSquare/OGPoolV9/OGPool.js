@@ -33,7 +33,7 @@ import {
     getRecommender,
     getAddressFromId,
     getAllInvites
-} from "../../../graph/donateV5";
+} from "../../../graph/donateV9";
 import OGPoolStyle from "./OGPoolStyle";
 import {ETHDecimals, FDTDecimals, USDTDecimals, FLMDecimals, ZeroAddress} from "../../../config/constants";
 import search from "../../../imgs/search.png";
@@ -624,7 +624,7 @@ const OGPoolPublic = (props) => {
                     borderRadius: '50%',
                 }}
                                     onClick={() => {
-                                        history("/OGPoolV5Admin")
+                                        history("/OGPoolV9Admin")
                                     }}>
                     <img src={user3} style={{width: '22px', marginLeft: '-10px', marginTop: '-10px'}}/>
                 </Button>}
@@ -653,7 +653,7 @@ const OGPoolPublic = (props) => {
                     {(isSecondAdmin | isThreeAdmin || isFourAdmin || isFiveAdmin) &&
 
                         <div className={"nav-item " + (activeNav == 4 ? "active" : "")} onClick={() => {
-                            history("/OGV5UserAdmin")
+                            history("/OGV9UserAdmin")
                         }}>
                             Lv{isSecondAdmin ? 2 : ""}{isThreeAdmin ? 3 : ""}{isFourAdmin ? 4 : ""}{isFiveAdmin ? 5 : ""} Admin
                         </div>

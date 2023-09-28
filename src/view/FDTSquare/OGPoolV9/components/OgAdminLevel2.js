@@ -55,51 +55,17 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
         return await viewMethod(contractTemp, state.account, name, params)
     }
 
-    const getUserSetAdminsLevelThree = async () => {
+    const getUserSetAdminsLevel = async () => {
         try {
-            let length = await handleViewMethod("getAdminsLevelThreeLength", [state.account])
-            let adminWhiteList = []
+            const length = await handleViewMethod("getAdminsLevelLength", [state.account])
+            let tempArr = []
+            const userLevels = await handleViewMethod("userLevels", [state.account])
             for (let i = 0; i < length; i++) {
-                let res = await handleViewMethod("setAdminLevelThree_", [state.account, i])
-                adminWhiteList.push(res)
+                const res = await handleViewMethod("setAdminLevel_", [state.account, userLevels, i])
+                tempArr.push(res)
             }
-            setAdminWhiteList(adminWhiteList)
+            setAdminWhiteList(tempArr)
 
-            let refArr = []
-            allRecords.forEach(item => {
-                adminWhiteList.forEach(adminItem => {
-                    if (adminItem.user.toLowerCase() == item.addr.toLowerCase().toString()) {
-                        refArr.push(item)
-                    }
-                })
-            })
-            let tAmount = 0, tETH = 0, tUSDT = 0
-            refArr.forEach(item => {
-                tAmount += parseFloat(item.fdtAmount)
-                tETH += parseFloat(item.ethAmount)
-                tUSDT += parseFloat(item.usdtAmount)
-            })
-            refArr.push({
-                name: "Total",
-                fdtAmount: tAmount,
-                ethAmount: tETH,
-                usdtAmount: tUSDT
-            })
-            setREFRecords(refArr)
-
-        } catch (e) {
-
-        }
-    }
-    const getUserSetAdminsLevelFive = async () => {
-        try {
-            let length = await handleViewMethod("getAdminsLevelFiveLength", [state.account])
-            let adminWhiteList = []
-            for (let i = 0; i < length; i++) {
-                let res = await handleViewMethod("setAdminLevelFive_", [state.account, i])
-                adminWhiteList.push(res)
-            }
-            setAdminWhiteList(adminWhiteList)
 
             let refArr = []
             allRecords.forEach(item => {
@@ -127,49 +93,16 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
             console.log(e)
         }
     }
-    const getUserSetAdminsLevelFour = async () => {
-        try {
-            let length = await handleViewMethod("getAdminsLevelFourLength", [state.account])
-            let adminWhiteList = []
-            for (let i = 0; i < length; i++) {
-                let res = await handleViewMethod("setAdminLevelFour_", [state.account, i])
-                adminWhiteList.push(res)
-            }
-            setAdminWhiteList(adminWhiteList)
 
-            let refArr = []
-            allRecords.forEach(item => {
-                adminWhiteList.forEach(adminItem => {
-                    if (adminItem.user.toLowerCase() == item.addr.toLowerCase().toString()) {
-                        refArr.push(item)
-                    }
-                })
-            })
-            let tAmount = 0, tETH = 0, tUSDT = 0
-            refArr.forEach(item => {
-                tAmount += parseFloat(item.fdtAmount)
-                tETH += parseFloat(item.ethAmount)
-                tUSDT += parseFloat(item.usdtAmount)
-            })
-            refArr.push({
-                name: "Total",
-                fdtAmount: tAmount,
-                ethAmount: tETH,
-                usdtAmount: tUSDT
-            })
-            setREFRecords(refArr)
 
-        } catch (e) {
-            console.log(e)
-        }
-    }
+
     const handleSetAdminLevelFour = async () => {
         let arr = []
         for (let i = 0; i < addWhiteArr.length; i++) {
             arr.push(form2.getFieldValue()["address" + i])
         }
         await handleDealMethod("setAdminLevelFour", [arr])
-        getUserSetAdminsLevelFour()
+        getUserSetAdminsLevel()
     }
     const handleSetAdminLevelFive = async () => {
         let arr = []
@@ -177,7 +110,39 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
             arr.push(form2.getFieldValue()["address" + i])
         }
         await handleDealMethod("setAdminLevelFive", [arr])
-        getUserSetAdminsLevelFive()
+        getUserSetAdminsLevel()
+    }
+    const handleSetAdminLevelSix = async () => {
+        let arr = []
+        for (let i = 0; i < addWhiteArr.length; i++) {
+            arr.push(form2.getFieldValue()["address" + i])
+        }
+        await handleDealMethod("setAdminLevelSix", [arr])
+        getUserSetAdminsLevel()
+    }
+    const  handleSetAdminLevelSeven= async () => {
+        let arr = []
+        for (let i = 0; i < addWhiteArr.length; i++) {
+            arr.push(form2.getFieldValue()["address" + i])
+        }
+        await handleDealMethod("setAdminLevelSeven", [arr])
+        getUserSetAdminsLevel()
+    }
+    const  handleSetAdminLevelEight= async () => {
+        let arr = []
+        for (let i = 0; i < addWhiteArr.length; i++) {
+            arr.push(form2.getFieldValue()["address" + i])
+        }
+        await handleDealMethod("setAdminLevelEight", [arr])
+        getUserSetAdminsLevel()
+    }
+    const  handleSetAdminLevelNine= async () => {
+        let arr = []
+        for (let i = 0; i < addWhiteArr.length; i++) {
+            arr.push(form2.getFieldValue()["address" + i])
+        }
+        await handleDealMethod("setAdminLevelNine", [arr])
+        getUserSetAdminsLevel()
     }
     const handleSetAdminLevelThree = async () => {
         let arr = []
@@ -185,7 +150,7 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
             arr.push(form2.getFieldValue()["address" + i])
         }
         await handleDealMethod("setAdminLevelThree", [arr])
-        getUserSetAdminsLevelThree()
+        getUserSetAdminsLevel()
     }
 
     const getMaxThree = async () => {
@@ -215,15 +180,44 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
 
     const removeWhiteListUser = async () => {
         if (isLevel2) {
-            await handleDealMethod("removeAdminLevelThree", [curWhiteUser])
-            getUserSetAdminsLevelThree()
-        } else {
-            await handleDealMethod("removeAdminLevelFour", [curWhiteUser])
-            getUserSetAdminsLevelFour()
-
+            setCanSetLevel(3)
+        } else if (isThreeAdmin) {
+            setCanSetLevel(4)
+        } else if (isFourAdmin) {
+            setCanSetLevel(5)
+        }else if (isFiveAdmin) {
+            setCanSetLevel(6)
+        }else if (isSixAdmin) {
+            setCanSetLevel(7)
+        }else if (isSevenAdmin) {
+            setCanSetLevel(8)
+        }else if (isEightAdmin) {
+            setCanSetLevel(8)
         }
-        setDelOpen(false)
 
+        if (isLevel2) {
+            await handleDealMethod("removeAdminLevelThree", [curWhiteUser])
+        } else if(isThreeAdmin){
+            await handleDealMethod("removeAdminLevelFour", [curWhiteUser])
+        }
+        if(isFourAdmin){
+            await handleDealMethod("removeAdminLevelFive", [curWhiteUser])
+        }
+        if(isFiveAdmin){
+            await handleDealMethod("removeAdminLevelSix", [curWhiteUser])
+        }
+        if(isSixAdmin){
+            await handleDealMethod("removeAdminLevelSeven", [curWhiteUser])
+        }
+        if(isSevenAdmin){
+            await handleDealMethod("removeAdminLevelEight", [curWhiteUser])
+        }
+        if(isEightAdmin){
+            await handleDealMethod("removeAdminLevelNine", [curWhiteUser])
+        }
+        getUserSetAdminsLevel()
+        setDelOpen(false)
+        getMaxThree()
     }
 
     const deleteWhite = async (user) => {
@@ -236,17 +230,22 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
         if (!judgeRes) {
             return
         }
-        console.log(isThreeAdmin)
         if (isLevel2) {
-            getUserSetAdminsLevelThree()
             setCanSetLevel(3)
-        } else if(isThreeAdmin){
-            getUserSetAdminsLevelFour()
+        } else if (isThreeAdmin) {
             setCanSetLevel(4)
-        }else if(isFourAdmin){
-            getUserSetAdminsLevelFive()
+        } else if (isFourAdmin) {
             setCanSetLevel(5)
+        }else if (isFiveAdmin) {
+            setCanSetLevel(6)
+        }else if (isSixAdmin) {
+            setCanSetLevel(7)
+        }else if (isSevenAdmin) {
+            setCanSetLevel(8)
+        }else if (isEightAdmin) {
+            setCanSetLevel(8)
         }
+        getUserSetAdminsLevel()
         getMaxThree()
     }, [state.account]);
 
@@ -324,6 +323,20 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
                             {isFourAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelFive()
                             }}>Add Admin level5</Button>}
+                            {isFiveAdmin && <Button className="add-btn" type="primary" onClick={() => {
+                                handleSetAdminLevelSix()
+                            }}>Add Admin level6</Button>}
+                            {isSixAdmin && <Button className="add-btn" type="primary" onClick={() => {
+                                handleSetAdminLevelSeven()
+                            }}>Add Admin level7</Button>}
+
+                            {isSevenAdmin && <Button className="add-btn" type="primary" onClick={() => {
+                                handleSetAdminLevelEight()
+                            }}>Add Admin level8</Button>}
+
+                            {isEightAdmin && <Button className="add-btn" type="primary" onClick={() => {
+                                handleSetAdminLevelNine()
+                            }}>Add Admin level9</Button>}
                         </div>
 
                         <div className="fire-list-box admin3-list">

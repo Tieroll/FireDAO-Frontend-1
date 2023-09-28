@@ -15,7 +15,7 @@ import {dealMethod, dealPayMethod, viewMethod} from "../../../utils/contractUtil
 import develop from "../../../env";
 import {useNavigate} from "react-router-dom";
 import judgeStatus from "../../../utils/judgeStatus";
-import {getDonateRecord, getAllRegisters} from "../../../graph/donateV5";
+import {getDonateRecord, getAllRegisters} from "../../../graph/donateV9";
 import OGUserAdminStyle from "./OGUserAdminStyle";
 import OgSetActive from "./components/OgSetActive";
 import OgSetBlacklist from "./components/OgSetBlacklist";
@@ -95,15 +95,22 @@ const OGPoolPublic = (props) => {
 
     const getIsAdmin = async () => {
         const isSecond = await handleViewMethod("checkAddrForAdminLevelTwo", [state.account])
-
+        console.log(isSecond)
         const isThree = await handleViewMethod("checkAddrForAdminLevelThree", [state.account])
+        console.log(isThree)
         const isFour = await handleViewMethod("checkAddrForAdminLevelFour", [state.account])
+        console.log(isFour)
         const isFive = await handleViewMethod("checkAddrForAdminLevelFive", [state.account])
+        console.log(isFive)
 
         const isSix = await handleViewMethod("checkAddrForAdminLevelSix", [state.account])
+        console.log(isSix)
         const isSeven = await handleViewMethod("checkAddrForAdminLevelSeven", [state.account])
+        console.log(isSeven)
         const isEight = await handleViewMethod("checkAddrForAdminLevelEight", [state.account])
+        console.log(isEight)
         const isNine = await handleViewMethod("checkAddrForAdminLevelNine", [state.account])
+        console.log(isNine)
         setIsSecondAdmin(isSecond)
         setIsThreeAdmin(isThree)
         setIsFourAdmin(isFour)
@@ -113,7 +120,6 @@ const OGPoolPublic = (props) => {
         setIsSevenAdmin(isSeven)
         setIsEightAdmin(isEight)
         setIsNineAdmin(isNine)
-        console.log(state.account,isSecond)
 
     }
     const getMyLevel =  ()=>{

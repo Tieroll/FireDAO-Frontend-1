@@ -17,7 +17,7 @@ import AddAddressRate from "./AddAddressRate.js";
 import {showNum} from "../../../utils/bigNumberUtil";
 import del from "../../../imgs/sc.png";
 import eth from "../../../imgs/ethereum.svg";
-import {getDonateRecord, getSecondDonateRecord, getThreeDonateRecord} from "../../../graph/donateV5";
+import {getDonateRecord, getSecondDonateRecord, getThreeDonateRecord} from "../../../graph/donateV9";
 import BigNumber from "bignumber.js";
 import addressMap from "../../../api/addressMap";
 import {FDTDecimals, ETHDecimals, USDTDecimals} from "../../../config/constants";
@@ -236,11 +236,9 @@ const OgPoolAdmin = (props) => {
     }
     const getSecondAdmins = async (ownerAddress) => {
         const length = await handleViewMethod("getAdminsLevelLength", [ownerAddress])
-        console.log(length)
         let tempArr = []
 
         const userLevels = await handleViewMethod("userLevels", [ownerAddress])
-        console.log(userLevels)
         for (let i = 0; i < length; i++) {
             const res = await handleViewMethod("setAdminLevel_", [ownerAddress, userLevels, i])
             tempArr.push(res)

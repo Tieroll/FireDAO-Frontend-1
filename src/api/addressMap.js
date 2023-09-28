@@ -42,7 +42,8 @@ CONTRACTS = {
     PrivateExchangePoolOG: {address: "0x65d741A9d21cA93AB8aC202b7e6693AE3656CEFa", abi: PrivateExchangePoolOG},
     PrivateExchangePoolOGV5: {address: "0x9B635aC49F76662b5a7b8BC02C664Aa3a6EBAd76", abi: PrivateExchangePoolOGV5},
     ogV9: {address: "0x388C99E4A51918598A6caAc769E9118FD1fee890", abi: ogV9},
-
+    FDTOGV9:{address:"0x445FCbFbf1Cc2E8ECEC5B53E8A184D9Cd5ffA534"},
+    FLMV9:{address:"0x2741B9B078b1D10bcb0EeeccDdC044394952B8c4"},
 
     TreasuryDistribution: {address: "0xA8FcF03CDEc12CF19767d12aC4c627FF6e5D1c21", abi: TreasuryDistribution},
     Guild: {address: "0xD75a1A6F27993571048C17FD1D346a36DD38E6Bd", abi: Guild},
@@ -66,6 +67,7 @@ CONTRACTS = {
     normalPool: {address: "0x44dBD7664A4F89C2598b93a04C3EF7c13FC859bC", abi: normalPool},
     poolManager : {address: "0x59eEeD4C641592a622d1Ee1F960D2e27376BC212", abi: poolManger},
     erc1155: {abi: erc1155},
-    FDTOG:{address:"0x37F361E62c7AebD5C75614Dda1a18fb84f0b99A1"}
+    FDTOG:{address:"0x37F361E62c7AebD5C75614Dda1a18fb84f0b99A1"},
+
 };
 export default CONTRACTS

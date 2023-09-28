@@ -15,7 +15,7 @@ import {dealMethod, dealPayMethod, viewMethod} from "../../../../utils/contractU
 import develop from "../../../../env";
 import {useNavigate} from "react-router-dom";
 import judgeStatus from "../../../../utils/judgeStatus";
-import {getDonateRecord, getAllRegisters} from "../../../../graph/donateV5";
+import {getDonateRecord, getAllRegisters} from "../../../../graph/donateV9";
 import OGUserAdminStyle from "./TeamIncomeStyle.js";
 import OgSetActive from "../../OGPool/components/OgSetActive";
 import OgSetBlacklist from "../../OGPool/components/OgSetBlacklist";
