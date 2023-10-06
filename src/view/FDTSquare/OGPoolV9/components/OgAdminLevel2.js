@@ -15,7 +15,16 @@ import AddThreeWhiteListStyle from "./OgAdminLevelStyle";
 import judgeStatus from "../../../../utils/judgeStatus";
 
 
-const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiveAdmin,isSixAdmin,isSevenAdmin,isEightAdmin}) => {
+const AddThreeWhiteList = ({
+                               allRecords,
+                               isLevel2,
+                               isThreeAdmin,
+                               isFourAdmin,
+                               isFiveAdmin,
+                               isSixAdmin,
+                               isSevenAdmin,
+                               isEightAdmin
+                           }) => {
     let {state, dispatch} = useConnect();
     const [addWhiteArr, setAddWArr] = useState([{}])
     const [curWhiteUser, setCurWhiteUser] = useState("")
@@ -95,7 +104,6 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
     }
 
 
-
     const handleSetAdminLevelFour = async () => {
         let arr = []
         for (let i = 0; i < addWhiteArr.length; i++) {
@@ -120,7 +128,7 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
         await handleDealMethod("setAdminLevelSix", [arr])
         getUserSetAdminsLevel()
     }
-    const  handleSetAdminLevelSeven= async () => {
+    const handleSetAdminLevelSeven = async () => {
         let arr = []
         for (let i = 0; i < addWhiteArr.length; i++) {
             arr.push(form2.getFieldValue()["address" + i])
@@ -128,7 +136,7 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
         await handleDealMethod("setAdminLevelSeven", [arr])
         getUserSetAdminsLevel()
     }
-    const  handleSetAdminLevelEight= async () => {
+    const handleSetAdminLevelEight = async () => {
         let arr = []
         for (let i = 0; i < addWhiteArr.length; i++) {
             arr.push(form2.getFieldValue()["address" + i])
@@ -136,7 +144,7 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
         await handleDealMethod("setAdminLevelEight", [arr])
         getUserSetAdminsLevel()
     }
-    const  handleSetAdminLevelNine= async () => {
+    const handleSetAdminLevelNine = async () => {
         let arr = []
         for (let i = 0; i < addWhiteArr.length; i++) {
             arr.push(form2.getFieldValue()["address" + i])
@@ -156,23 +164,23 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
     const getMaxThree = async () => {
         let res
         if (isLevel2) {
-            res = await  handleViewMethod("maxLevels", [2])
-        } else if(isThreeAdmin){
+            res = await handleViewMethod("maxLevels", [2])
+        } else if (isThreeAdmin) {
             res = await handleViewMethod("maxLevels", [3])
         }
-        if(isFourAdmin){
-           res = await handleViewMethod("maxLevels", [4])
+        if (isFourAdmin) {
+            res = await handleViewMethod("maxLevels", [4])
         }
-        if(isFiveAdmin){
+        if (isFiveAdmin) {
             res = await handleViewMethod("maxLevels", [5])
         }
-        if(isSixAdmin){
+        if (isSixAdmin) {
             res = await handleViewMethod("maxLevels", [6])
         }
-        if(isSevenAdmin){
+        if (isSevenAdmin) {
             res = await handleViewMethod("maxLevels", [7])
         }
-        if(isEightAdmin){
+        if (isEightAdmin) {
             res = await handleViewMethod("maxLevels", [8])
         }
         setMax(res.toString())
@@ -185,34 +193,34 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
             setCanSetLevel(4)
         } else if (isFourAdmin) {
             setCanSetLevel(5)
-        }else if (isFiveAdmin) {
+        } else if (isFiveAdmin) {
             setCanSetLevel(6)
-        }else if (isSixAdmin) {
+        } else if (isSixAdmin) {
             setCanSetLevel(7)
-        }else if (isSevenAdmin) {
+        } else if (isSevenAdmin) {
             setCanSetLevel(8)
-        }else if (isEightAdmin) {
+        } else if (isEightAdmin) {
             setCanSetLevel(8)
         }
 
         if (isLevel2) {
             await handleDealMethod("removeAdminLevelThree", [curWhiteUser])
-        } else if(isThreeAdmin){
+        } else if (isThreeAdmin) {
             await handleDealMethod("removeAdminLevelFour", [curWhiteUser])
         }
-        if(isFourAdmin){
+        if (isFourAdmin) {
             await handleDealMethod("removeAdminLevelFive", [curWhiteUser])
         }
-        if(isFiveAdmin){
+        if (isFiveAdmin) {
             await handleDealMethod("removeAdminLevelSix", [curWhiteUser])
         }
-        if(isSixAdmin){
+        if (isSixAdmin) {
             await handleDealMethod("removeAdminLevelSeven", [curWhiteUser])
         }
-        if(isSevenAdmin){
+        if (isSevenAdmin) {
             await handleDealMethod("removeAdminLevelEight", [curWhiteUser])
         }
-        if(isEightAdmin){
+        if (isEightAdmin) {
             await handleDealMethod("removeAdminLevelNine", [curWhiteUser])
         }
         getUserSetAdminsLevel()
@@ -236,13 +244,13 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
             setCanSetLevel(4)
         } else if (isFourAdmin) {
             setCanSetLevel(5)
-        }else if (isFiveAdmin) {
+        } else if (isFiveAdmin) {
             setCanSetLevel(6)
-        }else if (isSixAdmin) {
+        } else if (isSixAdmin) {
             setCanSetLevel(7)
-        }else if (isSevenAdmin) {
+        } else if (isSevenAdmin) {
             setCanSetLevel(8)
-        }else if (isEightAdmin) {
+        } else if (isEightAdmin) {
             setCanSetLevel(8)
         }
         getUserSetAdminsLevel()
@@ -379,7 +387,6 @@ const AddThreeWhiteList = ({allRecords, isLevel2, isThreeAdmin,isFourAdmin,isFiv
                             }
 
                         </div>
-
 
 
                     </div>
