@@ -26,6 +26,7 @@ import seedDonation from "../abi/seedDonation.json"
 import FLMExchange from "../abi/FLMExchange.json"
 import FLMAirdrop from "../abi/FLMAirdrop.json"
 import ogV9 from "../abi/arbog.json"
+
 let CONTRACTS
 CONTRACTS = {
     erc20: {address: "0x46B85F2E50BFB50F4F78d29e98E679a859d5F839", abi: erc20Abi},
@@ -42,8 +43,8 @@ CONTRACTS = {
     PrivateExchangePoolOG: {address: "0x65d741A9d21cA93AB8aC202b7e6693AE3656CEFa", abi: PrivateExchangePoolOG},
     PrivateExchangePoolOGV5: {address: "0x9B635aC49F76662b5a7b8BC02C664Aa3a6EBAd76", abi: PrivateExchangePoolOGV5},
     ogV9: {address: "0x388C99E4A51918598A6caAc769E9118FD1fee890", abi: ogV9},
-    FDTOGV9:{address:"0x445FCbFbf1Cc2E8ECEC5B53E8A184D9Cd5ffA534"},
-    FLMV9:{address:"0x2741B9B078b1D10bcb0EeeccDdC044394952B8c4"},
+    FDTOGV9: {address: "0x445FCbFbf1Cc2E8ECEC5B53E8A184D9Cd5ffA534"},
+    FLMV9: {address: "0x2741B9B078b1D10bcb0EeeccDdC044394952B8c4"},
 
     TreasuryDistribution: {address: "0xA8FcF03CDEc12CF19767d12aC4c627FF6e5D1c21", abi: TreasuryDistribution},
     Guild: {address: "0xD75a1A6F27993571048C17FD1D346a36DD38E6Bd", abi: Guild},
@@ -52,22 +53,22 @@ CONTRACTS = {
     FDT: {address: "0x37F361E62c7AebD5C75614Dda1a18fb84f0b99A1", abi: FDT},
     fdtOgToFdt: {address: "0x21212FC679C23bbAa8ae3dDAE43127590331ccA1", abi: fdtOgToFdt},
     FLMPool: {address: "0xF4CFfc4e0D71B26592D3a916160e3Fc6ca58aa62", abi: FLMPool},
-    FDTLockMining:{address:"0x8Fe6595636e03dee7b8BDcC23b0533E6Eb26B781",abi:FDTLockMining},
+    FDTLockMining: {address: "0x8Fe6595636e03dee7b8BDcC23b0533E6Eb26B781", abi: FDTLockMining},
     autolp: {address: "0xEACd7603C3b6BD101636B214EE36887D88d199E9", abi: autolp},
 
     OGPool: {address: "0xf2b2575DEbb48FC225D2289ed77D246322a60dbF", abi: seedDonation},
-    FLMExchange:{address:"0xC63595DBE3dC5B8727f69C64d93990c510cf5AB0",abi:FLMExchange},
+    FLMExchange: {address: "0xC63595DBE3dC5B8727f69C64d93990c510cf5AB0", abi: FLMExchange},
 
     seedDonation: {address: "0xf2b2575DEbb48FC225D2289ed77D246322a60dbF", abi: seedDonation},
-    FLMPoolLPAddress:{address:"0x6adf22540e77a100d136ca76a79a39af3b30484a"},
+    FLMPoolLPAddress: {address: "0x6adf22540e77a100d136ca76a79a39af3b30484a"},
 
-    FLM:{address:"0x3A04051b411912EdF2873e50246c95fba3a90951"},
-    FLMAirdrop:{address:"0x6e1d634d8c74dAa36140A006582Dd923949e6A46", abi:FLMAirdrop},
+    FLM: {address: "0x3A04051b411912EdF2873e50246c95fba3a90951"},
+    FLMAirdrop: {address: "0x6e1d634d8c74dAa36140A006582Dd923949e6A46", abi: FLMAirdrop},
     emergencyPool: {address: "0x251a7c07Ff5b71650DF9FEeB01184FC31a2bD57C", abi: emergencyPool},
     normalPool: {address: "0x44dBD7664A4F89C2598b93a04C3EF7c13FC859bC", abi: normalPool},
-    poolManager : {address: "0x59eEeD4C641592a622d1Ee1F960D2e27376BC212", abi: poolManger},
+    poolManager: {address: "0x59eEeD4C641592a622d1Ee1F960D2e27376BC212", abi: poolManger},
     erc1155: {abi: erc1155},
-    FDTOG:{address:"0x37F361E62c7AebD5C75614Dda1a18fb84f0b99A1"},
+    FDTOG: {address: "0x37F361E62c7AebD5C75614Dda1a18fb84f0b99A1"},
 
 };
 export default CONTRACTS
