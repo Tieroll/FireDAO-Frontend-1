@@ -110,11 +110,13 @@ function App() {
             <AntdOverride/>
 
             {
-                location.pathname==="/"&&<Home/>
+                location.pathname === "/" && <Home/>
             }
-            {location.pathname !== "/"&&
+            {location.pathname !== "/" &&
                 <div className="content">
-                    <video webkit-playsinline="true"  playsInline={true}  x5-video-orientation="portraint"   x5-playsinline="true" className="firebg" width="100%" autoPlay="autoplay" loop="loop" muted="muted">
+                    <video webkit-playsinline="true" playsInline={true} x5-video-orientation="portraint"
+                           x5-playsinline="true" className="firebg" width="100%" autoPlay="autoplay" loop="loop"
+                           muted="muted">
                         <source src={firebg} type="video/mp4"/>
                     </video>
                     <FireDAOHeader/>
@@ -123,12 +125,12 @@ function App() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        paddingTop:"6em"
+                        paddingTop: "6em"
                     }}>
 
                         <div className="flex-container" style={{
-                            width:"100%",
-                            flexGrow:"1"
+                            width: "100%",
+                            flexGrow: "1"
                         }}>
                             <Routes>
                                 <Route path="/" element={<Home/>}/>
@@ -207,7 +209,7 @@ function App() {
                                 <Route path="/FLMAirdropManage" element={<FLMAirdropManage/>}/>
 
                                 <Route path="/ForumFLMAirdrop" element={<ForumFLMAirdrop/>}/>
-                                
+
                                 <Route path="/FLMAirdropLv1" element={<FLMAirdropLv1/>}/>
                                 <Route path="/FLMAirdropLv2" element={<FLMAirdropLv2/>}/>
 
@@ -220,7 +222,7 @@ function App() {
                             </Routes>
                         </div>
                         <div className='twindow'>
-                            
+
                         </div>
                     </div>
                     <FireDAOFooter/>
