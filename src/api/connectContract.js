@@ -1,10 +1,10 @@
-
-import {notification } from 'antd';
+import {notification} from 'antd';
 import addressMap from "./addressMap";
-const CONTRACTS =addressMap
+
+const CONTRACTS = addressMap
 
 function getContractByName(name, web3) {
-    if(!web3){
+    if (!web3) {
         notification.error({
             message: "Please connect",
             description:
@@ -22,7 +22,7 @@ function getContractAddress(name) {
     return CONTRACTS[name].address;
 }
 
-export  {
+export {
     CONTRACTS,
     getContractByName,
     getContractByContract,
