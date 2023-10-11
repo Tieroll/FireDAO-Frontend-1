@@ -1,65 +1,80 @@
 import styled from "styled-components";
 
 export default styled.div`
-  .title{
+  .title {
     text-align: center;
   }
+
   .panel-box {
     width: 100%;
 
     .panel-container {
       width: 90%;
-      .op-box{
+
+      .op-box {
         display: flex;
         justify-content: space-between;
-        .withdraw-box{
+
+        .withdraw-box {
           border-radius: 20px;
           border: 1px solid #eee;
           padding: 20px;
-          .name{
+
+          .name {
             text-align: center;
           }
-          .value{
+
+          .value {
             text-align: center;
             font-size: 18px;
             margin: 30px 0;
           }
-          .input-box{
+
+          .input-box {
             display: flex;
-            .withdraw-input{
+
+            .withdraw-input {
               width: 80px;
             }
           }
         }
       }
+
       .exchange-box {
         border-radius: 20px;
         border: 1px solid #eee;
         padding: 20px;
+
         .exchange {
           width: 400px;
-          .part1 ,.part2{
+
+          .part1, .part2 {
             display: flex;
             justify-content: space-between;
-            .right{
+
+            .right {
               display: flex;
               position: relative;
-              .balance{
+
+              .balance {
                 position: absolute;
                 right: 0;
                 bottom: -20px;
               }
             }
-            
+
           }
-          .to{
+
+          .to {
             text-align: center;
             margin: 20px 0;
           }
-          .part2{
+
+          .part2 {
             margin-top: 20px;
           }
-          .tip{
+
+          .tip {
             padding: 10px 0;
             font-size: 12px;
             color: #999;

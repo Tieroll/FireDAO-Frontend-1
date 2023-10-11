@@ -30,19 +30,27 @@ class MathCalculator {
     }
 
 }
-export function showNum(val,decimals){
-    if(!decimals){
+export function showNum(val, decimals) {
+    if (!val) {
+        return 0
+    }
+    if (val == NaN) {
+        return 0
+    }
+    if (!decimals && decimals != 0) {
         decimals = 2
     }
-    if(decimals < 3){
+    if (decimals == 0) {
+        return BigNumber(val.toString()).toFixed(0)
+    }
+    if (decimals < 3) {
 
-        return val ? parseFloat((BigNumber(val).multipliedBy(10**decimals).toFixed(0, BigNumber.ROUND_DOWN)) / 10**decimals).toLocaleString() : 0
+        return val ? BigNumber((BigNumber(val).toFixed(decimals))).toLocaleString() : 0
     }
     if (val) {
-        return val ? parseFloat((BigNumber(val).multipliedBy(10**decimals).toFixed(0, BigNumber.ROUND_DOWN)) / 10**decimals) : 0
+        return val ? BigNumber((BigNumber(val).toFixed(decimals))) : 0
     }
 
     return 0
 }
-
 export default MathCalculator;

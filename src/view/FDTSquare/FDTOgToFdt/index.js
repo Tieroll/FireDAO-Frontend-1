@@ -117,14 +117,14 @@ const FDTOgToFdt = (props) => {
             const excArr = res.data.allExchangeRecords, claArr = res.data.allClaimRecords
             setChangeRecord(excArr)
             setClaimRecord(claArr)
-            let myEecArr = [],myClaimArr = []
-            for(let i=0;i<excArr.length;i++){
-                if(excArr[i].user.toLowerCase() == state.account.toLowerCase()){
+            let myEecArr = [], myClaimArr = []
+            for (let i = 0; i < excArr.length; i++) {
+                if (excArr[i].user.toLowerCase() == state.account.toLowerCase()) {
                     myEecArr.push(excArr[i])
                 }
             }
-            for(let i=0;i<claArr.length;i++){
-                if(claArr[i].user.toLowerCase() == state.account.toLowerCase()){
+            for (let i = 0; i < claArr.length; i++) {
+                if (claArr[i].user.toLowerCase() == state.account.toLowerCase()) {
                     myClaimArr.push(claArr[i])
                 }
             }
@@ -244,7 +244,7 @@ const FDTOgToFdt = (props) => {
                             My
                         </div>
                     </div>
-                    {curNav==1&&isMeNav==1&&(
+                    {curNav == 1 && isMeNav == 1 && (
                         <div className="fire-list-box">
                             <div className="list-header">
                                 <div className="col">
@@ -267,7 +267,7 @@ const FDTOgToFdt = (props) => {
                                 </div>
                             </div>
                             {exchangeRecord.map((item, index) => {
-                                return (   <div className="list-item" key={index}>
+                                return (<div className="list-item" key={index}>
                                     <div className="col">
                                         {index}
                                     </div>
@@ -281,7 +281,7 @@ const FDTOgToFdt = (props) => {
                                         {publicJs.dealSubAddr(item.user)}
                                     </div>
                                     <div className="col">
-                                        {item.amount/10**18}
+                                        {item.amount / 10 ** 18}
                                     </div>
                                     <div className="col">
                                         {dealTime(item.time)}
@@ -292,7 +292,7 @@ const FDTOgToFdt = (props) => {
                             })}
                         </div>
                     )}
-                    {curNav==1&&isMeNav==2&&(
+                    {curNav == 1 && isMeNav == 2 && (
                         <div className="fire-list-box">
                             <div className="list-header">
                                 <div className="col">
@@ -315,7 +315,7 @@ const FDTOgToFdt = (props) => {
                                 </div>
                             </div>
                             {myExchangeRecord.map((item, index) => {
-                                return (   <div className="list-item" key={index}>
+                                return (<div className="list-item" key={index}>
                                     <div className="col">
                                         {index}
                                     </div>
@@ -329,7 +329,7 @@ const FDTOgToFdt = (props) => {
                                         {publicJs.dealSubAddr(item.user)}
                                     </div>
                                     <div className="col">
-                                        {item.amount/10**18}
+                                        {item.amount / 10 ** 18}
                                     </div>
                                     <div className="col">
                                         {dealTime(item.time)}
@@ -340,7 +340,7 @@ const FDTOgToFdt = (props) => {
                             })}
                         </div>
                     )}
-                    {curNav==2&&isMeNav==1&&(
+                    {curNav == 2 && isMeNav == 1 && (
                         <div className="fire-list-box">
                             <div className="list-header">
                                 <div className="col">
@@ -363,7 +363,7 @@ const FDTOgToFdt = (props) => {
                                 </div>
                             </div>
                             {claimRecord.map((item, index) => {
-                                return (   <div className="list-item" key={index}>
+                                return (<div className="list-item" key={index}>
                                     <div className="col">
                                         {index}
                                     </div>
@@ -377,7 +377,7 @@ const FDTOgToFdt = (props) => {
                                         {publicJs.dealSubAddr(item.user)}
                                     </div>
                                     <div className="col">
-                                        {item.amount/10**18}
+                                        {item.amount / 10 ** 18}
                                     </div>
                                     <div className="col">
                                         {dealTime(item.time)}
@@ -388,7 +388,7 @@ const FDTOgToFdt = (props) => {
                             })}
                         </div>
                     )}
-                    {curNav==2&&isMeNav==2&&(
+                    {curNav == 2 && isMeNav == 2 && (
                         <div className="fire-list-box">
                             <div className="list-header">
                                 <div className="col">
@@ -411,7 +411,7 @@ const FDTOgToFdt = (props) => {
                                 </div>
                             </div>
                             {myClaimRecord.map((item, index) => {
-                                return (   <div className="list-item" key={index}>
+                                return (<div className="list-item" key={index}>
                                     <div className="col">
                                         {index}
                                     </div>
@@ -425,7 +425,7 @@ const FDTOgToFdt = (props) => {
                                         {publicJs.dealSubAddr(item.user)}
                                     </div>
                                     <div className="col">
-                                        {item.amount/10**18}
+                                        {item.amount / 10 ** 18}
                                     </div>
                                     <div className="col">
                                         {dealTime(item.time)}
