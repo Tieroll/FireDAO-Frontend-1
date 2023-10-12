@@ -5,8 +5,9 @@ import {Button, Card, Form, Input, message, notification, Radio, Switch} from "a
 import {getContractByName} from "../../../api/connectContract";
 import {dealMethod} from "../../../utils/contractUtil";
 import {UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
+
 const AddAddressRate = (props) => {
-    const {closeDialog,updateData} = props
+    const {closeDialog, updateData} = props
 
     let {state, dispatch} = useConnect();
     const [form] = Form.useForm();
@@ -30,8 +31,8 @@ const AddAddressRate = (props) => {
     }
 
 
-    const  handleSetAddress = async ()=>{
-        let  _to = [],_rates=[]
+    const handleSetAddress = async () => {
+        let _to = [], _rates = []
 
         for (let i = 0; i < ownerArr.length; i++) {
             let address = form.getFieldValue()["owner" + i]
@@ -39,7 +40,7 @@ const AddAddressRate = (props) => {
             _rates.push(form.getFieldValue()["rate" + i])
         }
 
-        await handleDealMethod("addAssignAddressAndRatio", [_to,_rates])
+        await handleDealMethod("addAssignAddressAndRatio", [_to, _rates])
         updateData()
         closeDialog()
     }
@@ -103,7 +104,7 @@ const AddAddressRate = (props) => {
                         })}
                     </Form>
                 </div>
-                <Button className="sub-btn"  onClick={handleSetAddress} type="primary">
+                <Button className="sub-btn" onClick={handleSetAddress} type="primary">
                     Submit
                 </Button>
             </div>
