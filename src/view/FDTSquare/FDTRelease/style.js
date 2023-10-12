@@ -1,64 +1,80 @@
 import styled from "styled-components";
 export default   styled.div`
-  .panel-box{
+  .panel-box {
     width: 100%;
-    .panel-container{
+
+    .panel-container {
       width: 90%;
-      .info-line{
+
+      .info-line {
         align-items: center;
-        .name{
+
+        .name {
           width: 100px;
           font-size: 18px;
         }
-        .value{
+
+        .value {
           font-size: 20px;
           margin-left: 20px;
-        }        
+        }
       }
     }
-    .panel-title{
+
+    .panel-title {
       width: 100%;
       display: flex;
       justify-content: space-between;
     }
   }
-  .title{
+
+  .title {
     text-align: center;
   }
-  .list-item{
+
+  .list-item {
     padding: 10px 0;
     display: flex;
-    .pid{
+
+    .pid {
       margin-right: 10px;
     }
   }
-  .discount-list{
-    .list-item{
+
+  .discount-list {
+    .list-item {
       padding: 10px 0;
       display: flex;
       align-items: center;
-      .end{
+
+      .end {
         margin: 0 10px;
       }
-      .discount{
+
+      .discount {
         margin: 0 10px;
       }
     }
   }
-  .content-item{
+
+  .content-item {
     margin-top: 2em;
   }
-  .current{
+
+  .current {
     display: flex;
     align-items: center;
-    .name{
+
+    .name {
       font-weight: bold;
       font-size: 18px;
     }
-    .value{
+
+    .value {
       margin-left: 10px;
     }
   }
+
   .nav-list {
 
     display: flex;

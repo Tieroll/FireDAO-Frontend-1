@@ -104,7 +104,7 @@ const FireLock = (props) => {
         const ownerAddr = await handleViewMethod("owner", [])
         setOwner(ownerAddr)
     }
-    const getTax= async () => {
+    const getTax = async () => {
         const res = await handleViewMethod("_tax", [])
         setTax(res)
     }
@@ -117,7 +117,7 @@ const FireLock = (props) => {
         const res = await handleViewMethod("openTrade", [])
         setOpenTrade(res)
     }
-    const getdistributeRates  = async () => {
+    const getdistributeRates = async () => {
         setDistribuRate({
             rate1: await handleViewMethod("distributeRates", [0]),
             rate2: await handleViewMethod("distributeRates", [1]),
