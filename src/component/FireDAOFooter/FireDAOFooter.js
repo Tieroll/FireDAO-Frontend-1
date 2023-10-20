@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Component, useEffect, useReducer } from "react";
+import React, {useState} from 'react';
+import {Component, useEffect, useReducer} from "react";
 import logo from "../../imgs/logo.png"
 import icon1 from "../../imgs/11.png"
 import icon2 from "../../imgs/22.png"
@@ -10,10 +10,11 @@ import icon6 from "../../imgs/66.png"
 import icon7 from "../../imgs/77.png"
 import icon8 from "../../imgs/88.png"
 import icon9 from "../../imgs/99.png"
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import footerMap from "../../config/footerMap";
-import { Menu } from 'antd';
+import {Menu} from 'antd';
 import FireDAOFooterStyle from "./FireDAOFooterStyle";
+
 function getItem(label, key, hr, children, type) {
     return {
         key,
@@ -80,53 +81,53 @@ const FireDAOFooter = () => {
                                 width: '100%'
                             }}
                         >
-                           
+
                             <Menu
                                 className="menu"
                                 mode="inline"
                                 defaultSelectedKeys={[]}
                                 defaultOpenKeys={[]}
                                 selectedKeys={selectedKeys}
-                                
+
                                 onOpenChange={onOpenChange}
                                 theme="dark"
                                 inlineCollapsed={collapsed}
                                 items={items}
                                 onClick={(e) => goPage(e)}
                             />
-                          
+
                         </div>
                     </div>
                 </div>
                 <div className="left">
-                    <img className="logo" src={logo} alt="" />
+                    <img className="logo" src={logo} alt=""/>
                     <div className="link-list">
                         <div className="link-item">
-                            <img className="icon" src={icon1} alt="" />
+                            <img className="icon" src={icon1} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon2} alt="" />
+                            <img className="icon" src={icon2} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon3} alt="" />
+                            <img className="icon" src={icon3} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon4} alt="" />
+                            <img className="icon" src={icon4} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon5} alt="" />
+                            <img className="icon" src={icon5} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon6} alt="" />
+                            <img className="icon" src={icon6} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon7} alt="" />
+                            <img className="icon" src={icon7} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon8} alt="" />
+                            <img className="icon" src={icon8} alt=""/>
                         </div>
                         <div className="link-item">
-                            <img className="icon" src={icon9} alt="" />
+                            <img className="icon" src={icon9} alt=""/>
                         </div>
 
                     </div>

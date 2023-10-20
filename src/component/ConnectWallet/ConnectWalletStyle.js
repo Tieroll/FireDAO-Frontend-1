@@ -1,61 +1,71 @@
 import styled from "styled-components";
 export default   styled.div`
- 
- .ant-btn-primary::after{
-  background: #140E0E;
- }
 
-.ant-dropdown-menu-item {
-    .ant-dropdown-menu-item-only-child{
-    background-color: hsla(0, 14%, 12%, 1) !important;
-}}
-.ant-dropdown-menu-item
-    .ant-dropdown-menu-item-active
-        .ant-dropdown-menu-item:hover{
-             background-color: hsla(0, 14%, 12%, 1) !important;
-        }
-
-
-.ant-dropdown-menu-item:hover{
-    background-color: hsla(0, 14%, 12%, 1) !important;
-}
-
-@media screen and (min-width: 1950px) {
-  .ant-btn-primary{
-  background: linear-gradient(32deg, #FF4E50 0%, #F9D423 100%);
-}
-.but2{
-  display: block;
-}
-.but1{
-  display:none;
-}
-.ant-btn .ant-btn-primary{
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-.ant-dropdown-menu-submenu-title:hover{
-    background-color:rgb(138, 128, 128);
+  .ant-btn-primary::after {
+    background: #140E0E;
   }
- .ant-dropdown-menu-item-only-child{
-     padding: 0px;
-  }
+
   .ant-dropdown-menu-item {
-  .ant-dropdown-menu-item-active >
-  .ant-dropdown-menu-item-only-child{
-    padding: 0px;
-    background-color:hsl(0deg 0% 12.16%);
-  }}
+    .ant-dropdown-menu-item-only-child {
+      background-color: hsla(0, 14%, 12%, 1) !important;
+    }
+  }
 
-  .connect-button {
-    border-radius: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: linear-gradient(32deg, #FF4E50 0%, #F9D423 100%);  }
+  .ant-dropdown-menu-item
+  .ant-dropdown-menu-item-active
+  .ant-dropdown-menu-item:hover {
+    background-color: hsla(0, 14%, 12%, 1) !important;
+  }
 
-}
-@media screen and (max-width: 1950px) {
+
+  .ant-dropdown-menu-item:hover {
+    background-color: hsla(0, 14%, 12%, 1) !important;
+  }
+
+  @media screen and (min-width: 1950px) {
     .ant-btn-primary {
       background: linear-gradient(32deg, #FF4E50 0%, #F9D423 100%);
-      border-radius:25px;
+    }
+
+    .but2 {
+      display: block;
+    }
+
+    .but1 {
+      display: none;
+    }
+
+    .ant-btn .ant-btn-primary {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .ant-dropdown-menu-submenu-title:hover {
+      background-color: rgb(138, 128, 128);
+    }
+
+    .ant-dropdown-menu-item-only-child {
+      padding: 0px;
+    }
+
+    .ant-dropdown-menu-item {
+      .ant-dropdown-menu-item-active >
+      .ant-dropdown-menu-item-only-child {
+        padding: 0px;
+        background-color: hsl(0deg 0% 12.16%);
+      }
+    }
+
+    .connect-button {
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(32deg, #FF4E50 0%, #F9D423 100%);
+    }
+
+  }
+  @media screen and (max-width: 1950px) {
+    .ant-btn-primary {
+      background: linear-gradient(32deg, #FF4E50 0%, #F9D423 100%);
+      border-radius: 25px;
     }
 
     .but2 {
