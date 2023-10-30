@@ -3,9 +3,8 @@ import styled from "styled-components";
 import onBuildingImg from  "../imgs/fire_building.webp"
 const OnBuilding = () => {
     const OnBuilding = styled.div`
-
-      .panel-box{
-        .panel-container{
+      .panel-box {
+        .panel-container {
           padding: 0 10em 5em;
           display: flex;
           justify-content: center;
@@ -13,21 +12,24 @@ const OnBuilding = () => {
           flex-direction: column;
         }
       }
-      img{
+
+      img {
         margin-top: 15%;
         min-width: 300px;
         width: 23vw;
       }
-      .title{
+
+      .title {
         margin-top: 2em;
         font-size: 2vw;
-        font-family: Roboto-Bold, Roboto,sans-serif;  
+        font-family: Roboto-Bold, Roboto, sans-serif;
         font-weight: bold;
         color: #FFFFFF;
         line-height: 3vw;
       }
+
       @media screen and (max-width: 1000px) {
-        img{
+        img {
           min-width: 200px;
         }
       }
