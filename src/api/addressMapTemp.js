@@ -26,7 +26,7 @@ if (develop.ENV === "production") {
 
         airdrop: {address: "0xcB9F989490a2084944323C727d159A4D4baA07C9", abi: airdrop},
 
-        
+
         WETH: {address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1", abi: erc20Abi}
     };
 } else if (develop.ENV === "testproduction") {
