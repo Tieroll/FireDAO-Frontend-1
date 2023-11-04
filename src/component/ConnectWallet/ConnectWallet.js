@@ -49,7 +49,6 @@ const ConnectWallet = (props) => {
                 // const permissions = await window.ethereum.request({
                 //     method: 'wallet_getPermissions',
                 // });
-
                 // const hasPermission = permissions.some((permission) =>
                 //     permission.parentCapability === 'eth_chainId' && permission.caveats.some((caveat) => {
                 //         const chainId = caveat.type === 'chainId' && caveat.value;
