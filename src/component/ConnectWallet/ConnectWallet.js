@@ -36,7 +36,6 @@ const ConnectWallet = (props) => {
                     const accounts = await window.ethereum.request({method: 'eth_accounts'});
                     if (accounts && accounts[0]) {
                         await connect(state, dispatch)
-
                     } else {
 
                     }
