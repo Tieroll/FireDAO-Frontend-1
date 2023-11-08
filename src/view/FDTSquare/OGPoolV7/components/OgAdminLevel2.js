@@ -38,7 +38,7 @@ const AddThreeWhiteList = ({
 
 
     const handleDealMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -56,7 +56,7 @@ const AddThreeWhiteList = ({
     }
 
     const handleViewMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -132,6 +132,7 @@ const AddThreeWhiteList = ({
         for (let i = 0; i < addWhiteArr.length; i++) {
             arr.push(form2.getFieldValue()["address" + i])
         }
+        console.log(arr,"setAdminLevelSeven")
         await handleDealMethod("setAdminLevelSeven", [arr])
         getUserSetAdminsLevel()
     }
@@ -181,16 +182,16 @@ const AddThreeWhiteList = ({
     }
 
     const removeWhiteListUser = async () => {
-        if (isLevel2) {
-            setCanSetLevel(3)
-        } else if (isThreeAdmin) {
-            setCanSetLevel(4)
-        } else if (isFourAdmin) {
-            setCanSetLevel(5)
-        } else if (isFiveAdmin) {
-            setCanSetLevel(6)
-        } else if (isSixAdmin) {
-            setCanSetLevel(7)
+        if (isLevel2) {//3
+            setCanSetLevel("King")
+        } else if (isThreeAdmin) {//4
+            setCanSetLevel("Diamond")
+        } else if (isFourAdmin) {//5
+            setCanSetLevel("Gold")
+        } else if (isFiveAdmin) {//6
+            setCanSetLevel("Silver")
+        } else if (isSixAdmin) {//7
+            setCanSetLevel("Bronze")
         }
 
         if (isLevel2) {
@@ -223,16 +224,16 @@ const AddThreeWhiteList = ({
         if (!judgeRes) {
             return
         }
-        if (isLevel2) {
-            setCanSetLevel(3)
-        } else if (isThreeAdmin) {
-            setCanSetLevel(4)
-        } else if (isFourAdmin) {
-            setCanSetLevel(5)
-        } else if (isFiveAdmin) {
-            setCanSetLevel(6)
-        } else if (isSixAdmin) {
-            setCanSetLevel(7)
+        if (isLevel2) {//3
+            setCanSetLevel("King")
+        } else if (isThreeAdmin) {//4
+            setCanSetLevel("Diamond")
+        } else if (isFourAdmin) {//5
+            setCanSetLevel("Gold")
+        } else if (isFiveAdmin) {//6
+            setCanSetLevel("Silver")
+        } else if (isSixAdmin) {//7
+            setCanSetLevel("Bronze")
         }
         getUserSetAdminsLevel()
         getMaxThree()
@@ -257,9 +258,9 @@ const AddThreeWhiteList = ({
                 <div className="panel-box">
                     <div className="panel-container">
                         <h3 className="tip">
-                            I can have <strong>{maxSet}</strong> level{canSetLevel} admin, I've
-                            got <strong>{adminWhiteList.length}</strong> level{canSetLevel} admin, I can
-                            set up <strong>{maxSet - adminWhiteList.length}</strong> level{canSetLevel} admin.
+                            I can have <strong>{maxSet}</strong> level {canSetLevel} admin, I've
+                            got <strong>{adminWhiteList.length}</strong> level {canSetLevel} admin, I can
+                            set up <strong>{maxSet - adminWhiteList.length}</strong> level {canSetLevel} admin.
 
                         </h3>
 
@@ -303,21 +304,21 @@ const AddThreeWhiteList = ({
                         <div className="btns">
                             {isLevel2 && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelThree()
-                            }}>Add Admin level3</Button>}
+                            }}>Add Admin Level King</Button>}
 
                             {isThreeAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelFour()
-                            }}>Add Admin level4</Button>}
+                            }}>Add Admin Level Diamond</Button>}
 
                             {isFourAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelFive()
-                            }}>Add Admin level5</Button>}
+                            }}>Add Admin Level Gold</Button>}
                             {isFiveAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelSix()
-                            }}>Add Admin level6</Button>}
+                            }}>Add Admin Level Silver</Button>}
                             {isSixAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelSeven()
-                            }}>Add Admin level7</Button>}
+                            }}>Add Admin Level Bronze</Button>}
 
 
                         </div>

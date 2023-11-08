@@ -28,7 +28,7 @@ const AddThreeWhiteList = ({allRecords}) => {
     const [maxThree, setMaxThree] = useState(0)
 
     const handleDealMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -46,7 +46,7 @@ const AddThreeWhiteList = ({allRecords}) => {
     }
 
     const handleViewMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }

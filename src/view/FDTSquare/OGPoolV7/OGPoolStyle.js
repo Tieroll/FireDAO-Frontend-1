@@ -280,7 +280,6 @@ export default styled.div`
       width: 40px;
       height: 40px;
       position: absolute;
-      top: 27%;
       left: 45%;
     }
 
@@ -463,7 +462,6 @@ export default styled.div`
           display: flex;
           justify-content: space-between;
           font-size: 16px;
-          padding-top: 8px;
           font-family: Roboto-Bold, Roboto;
 
           p {
@@ -740,7 +738,8 @@ export default styled.div`
         width: 40px;
         height: 40px;
         position: absolute;
-        top: 27%;
+        top: 90px;
+
         left: 45%;
       }
 
@@ -925,8 +924,8 @@ export default styled.div`
           .balance-box {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 16px;
-            padding-top: 8px;
             font-family: Roboto-Bold, Roboto;
 
             p {

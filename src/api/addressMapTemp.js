@@ -26,7 +26,6 @@ if (develop.ENV === "production") {
 
         airdrop: {address: "0xcB9F989490a2084944323C727d159A4D4baA07C9", abi: airdrop},
 
-
         WETH: {address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1", abi: erc20Abi}
     };
 } else if (develop.ENV === "testproduction") {
@@ -58,7 +57,6 @@ if (develop.ENV === "production") {
         airdrop: {address: "0xcB9F989490a2084944323C727d159A4D4baA07C9", abi: airdrop},
         PrivateExchangePoolOG: {address: "0xDC7B5f481Fe2d53733c49586130082D04f2b3EAE", abi: PrivateExchangePoolOG},
         TreasuryDistribution: {address: "0x689b1290020D6b04658f0A6300b39373c596c260", abi: TreasuryDistribution},
-
 
         WETH: {address: "0x5D0C84105D44919Dee994d729f74f8EcD05c30fB", abi: erc20Abi},
         FDT: {address: "0x0486e93d84Cb7c272Ff6c302AD2A807F1D3B568c", abi: erc20Abi},

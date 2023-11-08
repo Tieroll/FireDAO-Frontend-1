@@ -10,7 +10,7 @@ import ConnectWallet from "../../../component/ConnectWallet/ConnectWallet";
 import user3 from "../../../imgs/user3.png"
 import download from "../../../imgs/download.png"
 import {zeroAddress} from "viem";
-import {ETHPriceDecimals} from "../../../config/constants";
+import {ETHPriceDecimals, MaxUint256} from "../../../config/constants";
 import FLMIcon from "../../../imgs/FLMIcon.png"
 import {
     Button,
@@ -39,6 +39,7 @@ import {ETHDecimals, FDTDecimals, USDTDecimals, FLMDecimals, ZeroAddress} from "
 import search from "../../../imgs/search.png";
 import {dealTime} from "../../../utils/timeUtil";
 import coinInfo from "../../../config/coinInfo";
+import addressMap from "../../../api/addressMap";
 
 const OGPoolPublic = (props) => {
     let {state, dispatch} = useConnect();
@@ -63,6 +64,7 @@ const OGPoolPublic = (props) => {
     const [isSevenAdmin, setIsSevenAdmin] = useState(true)
 
     const [fdtBalance, setFdtBalance] = useState(0)
+    const [usdtBalance, setUSDTBalance] = useState(0)
 
     const [activeUsedAmount, setActiveUsedAmount] = useState(0)
     const [activateAccountUsedAmount, setActivateAccountUsedAmount] = useState(0)
@@ -74,6 +76,7 @@ const OGPoolPublic = (props) => {
     const [status, setStatus] = useState(0)
     const [isAdmin, setIsAdmin] = useState(false)
     const [myTeam, setMyTeamArr] = useState([])
+    const [nftType, setNFTType] = useState("")
 
     const [levelCountObj, setLevelCountObj] = useState({})
     const [rewardTotalETH, setRewardTotalETH] = useState({})
@@ -95,7 +98,7 @@ const OGPoolPublic = (props) => {
 
 
     const handleDealMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -104,14 +107,14 @@ const OGPoolPublic = (props) => {
 
 
     const handlePayDealMethod = async (name, params, value) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
         await dealPayMethod(contractTemp, state.account, name, params, value)
     }
     const handleViewMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -205,7 +208,11 @@ const OGPoolPublic = (props) => {
             setFDTBalance(balance.toString())
         }
     }
-
+    const getBalanceOfUSDT = async () => {
+        let res2 = await handleCoinViewMethod("balanceOf", "USDT", [state.account])
+        console.log(res2)
+        setUSDTBalance(BigNumber(res2).dividedBy(10 ** USDTDecimals).toString())
+    }
     const getTotalDonate = async () => {
         let res = await handleViewMethod("totalDonate", [])
         setTotalDonate(BigNumber(res).dividedBy(10 ** FDTDecimals).toString())
@@ -213,19 +220,25 @@ const OGPoolPublic = (props) => {
     const getfdtAmount = async (value) => {
         if (value > 0 || value == 0) {
             setInputValue(value)
-            let res = await handleViewMethod("getfdtOgAmount", [BigNumber(BigNumber(value).multipliedBy(10 ** FDTDecimals)).toString()])
-            setExchangeAmount(BigNumber(res).dividedBy(10 ** FDTDecimals).toFixed(2).toString())
+            let res = await handleViewMethod("CanExchangeFdtOg", [BigNumber(BigNumber(value).multipliedBy(10 ** USDTDecimals)).toFixed(0)])
+            setExchangeAmount(BigNumber(res).dividedBy(10 ** FDTDecimals).toFixed(2))
+            let nftType= await handleViewMethod("ValueToNft", [(BigNumber(value).multipliedBy(10 ** USDTDecimals)).toFixed(0)])
+            setNFTType(nftType)
+
         }
     }
-    const getETHPrice = async () => {
-        let price = await handleViewMethod("getLatesPrice", [])
-        setETHPrice(BigNumber(price).dividedBy(10 ** ETHPriceDecimals))
-    }
+
     const exchangeFdt = async () => {
+        console.log((BigNumber(inputValue).multipliedBy(10 ** USDTDecimals)).toFixed(0))
         if (inputValue > 0) {
-            await handlePayDealMethod("donate", [(BigNumber(inputValue).multipliedBy(10 ** ETHDecimals)).toString()], (BigNumber(inputValue).multipliedBy(10 ** ETHDecimals)).toString())
+            await handleDealMethod("donate", [(BigNumber(inputValue).multipliedBy(10 ** USDTDecimals)).toFixed(0)])
             getData()
         }
+    }
+    const handleApprove= async () => {
+        let contractTemp = await getContractByName("USDT", state.api,)
+        await dealMethod(contractTemp, state.account, "approve", [addressMap["ogV7"].address, MaxUint256])
+
     }
     const handleRegister = async () => {
         let refAddr = ""
@@ -250,6 +263,7 @@ const OGPoolPublic = (props) => {
 
     const getIsAdmin = async () => {
         const isS = await handleViewMethod("checkAddrForAdminLevelTwo", [state.account])
+        console.log(isS)
         const isT = await handleViewMethod("checkAddrForAdminLevelThree", [state.account])
         const isF = await handleViewMethod("checkAddrForAdminLevelFour", [state.account])
         const isFive = await handleViewMethod("checkAddrForAdminLevelFive", [state.account])
@@ -298,6 +312,8 @@ const OGPoolPublic = (props) => {
             if (!judgeRes) {
                 return
             }
+            getBalanceOfUSDT()
+
             await getInviteRate()
             await getInviteRecord()
 
@@ -309,7 +325,6 @@ const OGPoolPublic = (props) => {
             getAdmin()
             getMyStatus()
             getActivateAccount()
-            getETHPrice()
             getUserBuyMax()
 
 
@@ -474,17 +489,25 @@ const OGPoolPublic = (props) => {
     }
     const getInviteRate = async () => {
         // const rateLength = await handleViewMethod("getInviteRate", [])
-        let tempArr = []
-        for (let i = 0; i < 5; i++) {
-            const inviteRate = await handleViewMethod("inviteRate", [i])
-            tempArr.push(inviteRate.toString())
+        try{
+            let tempArr = []
+            for (let i = 0; i < 5; i++) {
+                const inviteRate = await handleViewMethod("inviteRate", [i])
+                tempArr.push(inviteRate.toString())
+            }
+            await setInvArr(tempArr)
+        }catch (e) {
+            console.log(e)
         }
-        await setInvArr(tempArr)
     }
     const getInviteRecord = async () => {
-        const res = await getAllInvites()
-        if (res && res.data) {
-            setInvRecord(res.data.allInvites)
+        try {
+            const res = await getAllInvites()
+            if (res && res.data) {
+                setInvRecord(res.data.allInvites)
+            }
+        }catch (e) {
+            console.log(e)
         }
     }
 
@@ -519,46 +542,34 @@ const OGPoolPublic = (props) => {
     }
     const coinOptions = [
         {
-            label: "0.2ETH",
-            value: '0.2',
+            label: "100USDT",
+            value: '100',
         },
         {
-            label: "0.4ETH",
-            value: '0.4',
-        },
-        {
-            label: "0.6ETH",
-            value: '0.6',
-        },
-        {
-            label: "0.8ETH",
-            value: '0.8',
-        },
-        {
-            label: "1.00ETH",
-            value: '1.00',
-        },
-        {
-            label: "1.2ETH",
-            value: '1.2',
-        },
-        {
-            label: "1.4ETH",
-            value: '1.4',
-        },
-        {
-            label: "1.6ETH",
-            value: '1.6',
-        },
-        {
-            label: "1.8ETH",
-            value: '1.8',
-        },
-        {
-            label: "2.00ETH",
-            value: '2.00',
+            label: "300USDT",
+            value: '300',
         },
 
+        {
+            label: "500USDT",
+            value: '500',
+        },
+        {
+            label: "1000USDT",
+            value: '1000',
+        },
+        {
+            label: "2000USDT",
+            value: '2000',
+        },
+        {
+            label: "3000USDT",
+            value: '3000',
+        },
+        {
+            label: "5000USDT",
+            value: '5000',
+        },
     ];
 
     return (
@@ -647,7 +658,7 @@ const OGPoolPublic = (props) => {
                     {(isSecondAdmin | isThreeAdmin || isFourAdmin || isFiveAdmin) &&
 
                         <div className={"nav-item " + (activeNav == 4 ? "active" : "")} onClick={() => {
-                            history("/OGV9UserAdmin")
+                            history("/OGV7UserAdmin")
                         }}>
                             Lv{isSecondAdmin ? 2 : ""}{isThreeAdmin ? 3 : ""}{isFourAdmin ? 4 : ""}{isFiveAdmin ? 5 : ""} Admin
                         </div>
@@ -724,7 +735,7 @@ const OGPoolPublic = (props) => {
                                     <div className="donate-part">
                                         <div className="balance-box">
 
-                                            <strong>Value: ${showNum(ethPrice * inputValue)} </strong>
+                                            <strong> </strong>
 
                                             <div className="right flex-box">
                                                 <div className="name">
@@ -732,9 +743,9 @@ const OGPoolPublic = (props) => {
                                                 </div>
                                                 <div className="value">
                                                 <span style={{marginRight: '6px'}}>
-                                                     {showNum(state.ethBalance)}
+                                                     {showNum(usdtBalance)}
                                                 </span>
-                                                    <span>ETH</span>
+                                                    <span>USDT</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -758,8 +769,8 @@ const OGPoolPublic = (props) => {
                                                     }
                                                 />
                                                 <div className="right-tip">
-                                                    <img className="coin-icon" src={ethereum} alt=""/>
-                                                    ETH
+                                                    <img className="coin-icon" src={USDTIcon} alt=""/>
+                                                    USDT
                                                 </div>
                                             </div>
                                         </Form.Item>
@@ -800,6 +811,31 @@ const OGPoolPublic = (props) => {
                                             </div>
                                         </Form.Item>
                                     </div>
+
+                                    <div className="donate-part" style={{marginTop: '8px'}}>
+                                        <div className="balance-box">
+                                            <strong className="">
+                                                Your receive
+                                            </strong>
+                                            <div className="balance-box ">
+
+                                            </div>
+
+                                        </div>
+                                        <Form.Item
+                                            name="pid"
+                                            validateTrigger="onBlur"
+                                            validateFirst={true}
+
+                                        >
+                                            <div className="input-box">
+                                                <div className="">
+                                                    {nftType}
+                                                </div>
+                                            </div>
+                                        </Form.Item>
+                                    </div>
+
                                     {/*not Regist*/}
                                     {!myStatus.registerStatus &&
 
@@ -820,18 +856,26 @@ const OGPoolPublic = (props) => {
                                             </Button>
                                         }
                                         {
-                                            status == 1 && BigNumber(state.ethBalance).lt(inputValue) &&
+                                            status == 1 && BigNumber(usdtBalance).lt(inputValue) &&
                                             <Button type="primary" className="donate">
                                                 Balance not enough
                                             </Button>
                                         }
                                         {
-                                            status == 1 && inputValue > 0 && !BigNumber(state.ethBalance).lt(inputValue) &&
-                                            <Button type="primary" className="donate" onClick={() => {
-                                                exchangeFdt()
-                                            }}>
-                                                Donate
-                                            </Button>
+                                            status == 1 && inputValue > 0 && !BigNumber(usdtBalance).lt(inputValue) &&
+                                            <div>
+                                                <Button type="primary" className="donate" onClick={() => {
+                                                    handleApprove()
+                                                }}>
+                                                    Approve
+                                                </Button>
+                                                <Button type="primary" className="donate" onClick={() => {
+                                                    exchangeFdt()
+                                                }}>
+                                                    Donate
+                                                </Button>
+                                            </div>
+
                                         }
 
                                     </div>

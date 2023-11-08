@@ -144,7 +144,7 @@ const AddWhiteList = ({allRecords}) => {
 
     return (
         <AddWhiteListStyle>
-            <Modal className="model-dialog" title="Delete Level 3  Admin" open={isDelMolOpen} onOk={removeAdminLevelThree}
+            <Modal className="model-dialog" title="Delete Level King  Admin" open={isDelMolOpen} onOk={removeAdminLevelThree}
                    onCancel={() => {
                        setDelOpen(false)
                    }}>
@@ -159,9 +159,9 @@ const AddWhiteList = ({allRecords}) => {
                 <div className="panel-box">
                     <div className="panel-container">
                         <h3 className="tip">
-                            I can have <strong>{maxTwo}</strong>  Level3 Admin, I've
-                            got <strong>{threeAdminWhiteList.length}</strong> Level3 Admin, I can
-                            set up <strong>{maxTwo - threeAdminWhiteList.length}</strong> Level3 Admin.
+                            I can have <strong>{maxTwo}</strong>  Level King Admin, I've
+                            got <strong>{threeAdminWhiteList.length}</strong> Level King Admin, I can
+                            set up <strong>{maxTwo - threeAdminWhiteList.length}</strong> Level King Admin.
 
                         </h3>
                         <div className="fire-list-box">

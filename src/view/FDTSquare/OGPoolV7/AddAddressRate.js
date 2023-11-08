@@ -5,6 +5,7 @@ import {Button, Card, Form, Input, message, notification, Radio, Switch} from "a
 import {getContractByName} from "../../../api/connectContract";
 import {dealMethod} from "../../../utils/contractUtil";
 import {UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
+import BigNumber from "bignumber.js";
 const AddAddressRate = (props) => {
     const {closeDialog,updateData} = props
 
@@ -23,7 +24,7 @@ const AddAddressRate = (props) => {
     }
 
     const handleDealMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
         }
         return dealMethod(contractTemp, state.account, name, params)
@@ -36,7 +37,7 @@ const AddAddressRate = (props) => {
         for (let i = 0; i < ownerArr.length; i++) {
             let address = form.getFieldValue()["owner" + i]
             _to.push(address.trim())
-            _rates.push(form.getFieldValue()["rate" + i])
+            _rates.push(BigNumber(form.getFieldValue()["rate" + i]).multipliedBy(100).toFixed(0))
         }
 
         await handleDealMethod("addAssignAddressAndRatio", [_to,_rates])

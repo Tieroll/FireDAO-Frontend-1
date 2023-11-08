@@ -5,7 +5,7 @@ const MaxUint256 = BigNumber('0xffffffffffffffffffffffffffffffffffffffffffffffff
 const ETHDecimals = 18
 const ETHPriceDecimals = 8
 const FDTDecimals = 18
-const USDTDecimals = 18
+const USDTDecimals = 6
 const FLMDecimals = 18
 const Network = {
   '0xaa36a7': {

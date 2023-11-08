@@ -22,7 +22,7 @@ import BigNumber from "bignumber.js";
 import addressMap from "../../../api/addressMap";
 import {FDTDecimals, ETHDecimals, USDTDecimals} from "../../../config/constants";
 import {formatAddress} from "../../../utils/publicJs";
-import listIcon from "../../../imgs/list-icon.webp";
+import USDTIcon from "../../../imgs/usdt.png";
 import {dealTime} from "../../../utils/timeUtil";
 import TeamIncome from "./components/TeamIncome";
 
@@ -285,7 +285,7 @@ const OgPoolAdmin = (props) => {
             return
         }
         let tempArr = [], totalRate = 0
-        for (let i = 0; i <7; i++) {
+        for (let i = 0; i < 7; i++) {
             const inviteRate = await handleViewMethod("teamRate", [i])
             tempArr.push({index: i + 1, inviteRate: inviteRate.toString()})
             totalRate = BigNumber(totalRate).plus(inviteRate)
@@ -320,16 +320,23 @@ const OgPoolAdmin = (props) => {
         setAdminFlmReward(tempArr)
     }
     const addInviteFLMRate = async () => {
-        const tempArr = [form2.getFieldValue().inviteFLMRate4, form2.getFieldValue().inviteFLMRate3,
-            form2.getFieldValue().inviteFLMRate2, form2.getFieldValue().inviteFLMRate1, form2.getFieldValue().inviteFLMRate0]
+        let tempArr = []
+        for(let i=6;i>=0;i--){
+            tempArr.push(form2.getFieldValue()["inviteFLMRate"+i]*100)
+        }
+
         await handleDealMethod("addFlmRate", [tempArr])
         getInviteFLMRate()
     }
 
     const addInviteRate = async () => {
-        const tempArr = [form2.getFieldValue().inviteRate0, form2.getFieldValue().inviteRate1,
-            form2.getFieldValue().inviteRate2, form2.getFieldValue().inviteRate3, form2.getFieldValue().inviteRate4,
-        ]
+
+        let tempArr = []
+        for(let i=0;i<5;i++){
+            tempArr.push(form2.getFieldValue()["inviteRate"+i]*100)
+        }
+
+
         await handleDealMethod("addInviteRate", [tempArr])
         getInviteRate()
     }
@@ -365,6 +372,17 @@ const OgPoolAdmin = (props) => {
     const handleSetFireSeedCoupon = async () => {
         await handleDealMethod("setFireSeedCoupon", [form.getFieldValue().FireSeedCoupon])
         getFireSeedCoupon()
+    }
+
+    const handleInitNFT = async () => {
+        let paramsArr = []
+        for (let i = 0; i < 7; i++) {
+            paramsArr.push(form.getFieldValue()["nft" + i])
+        }
+        await handleDealMethod("pushNFT", [paramsArr])
+    }
+    const handleSetNFT = async () => {
+        await handleDealMethod("setValueToNft", [form.getFieldValue().usdtAmount,form.getFieldValue().nftAddr])
     }
     const handleSetFSC = async () => {
         await handleDealMethod("setFSC", [form.getFieldValue().FSC])
@@ -446,9 +464,7 @@ const OgPoolAdmin = (props) => {
         await handleDealMethod("Claim", [fdtAddr, state.api.utils.toWei(form2.getFieldValue().withdrawNum)])
         this.getData()
     }
-    const claim = async () => {
-        await handleDealMethod("Claim", [form2.getFieldValue().tokenAddress, state.api.utils.toWei(form2.getFieldValue().tokenNumber)])
-    }
+
     const setSalePrice = async () => {
         if ((form2.getFieldValue().exchangeRate) * 1000 < 1) {
             message.warn("请输入 0到0.001")
@@ -682,7 +698,7 @@ const OgPoolAdmin = (props) => {
             title: 'InviteRate',
             dataIndex: 'inviteRate',
             key: 'inviteRate',
-            render: (text) => <span>{text}%</span>,
+            render: (text) => <span>{text/100}%</span>,
         },
     ]
     return (
@@ -880,6 +896,71 @@ const OgPoolAdmin = (props) => {
                                 </Form.Item>
                                 <Button type="primary" onClick={handleSetFireSeedCoupon}>Submit</Button>
                             </Form>
+                        </div>
+                        <div className="panel-container">
+                            <div className="panel-title">
+                                Init NFT Reward 
+                            </div>
+                            <Form form={form} name="control-hooks" className="form">
+                                {[0, 1, 2, 3, 4,5,6].map(i => {
+                                    return (
+                                        <Form.Item
+                                            name={"nft" + i}
+                                            label={"NFT" + (i + 1)}
+                                            validateTrigger="onBlur"
+                                            validateFirst={true}
+                                        >
+                                            <div className="input-box">
+                                                <Input/>
+                                            </div>
+                                        </Form.Item>
+                                    )
+
+                                })
+                                }
+
+
+                                <div className="btns">
+                                    <Button className="add-btn" type="primary" onClick={() => {
+                                        handleInitNFT()
+                                    }}>Submit</Button>
+                                </div>
+                            </Form>
+
+                        </div>
+                        <div className="panel-container">
+                            <div className="panel-title">
+                                SET NFT Reward 
+                            </div>
+                            <Form form={form} name="control-hooks" className="form">
+                                <Form.Item
+                                    name="usdtAmount"
+                                    label="USDT Amount"
+                                    validateTrigger="onBlur"
+                                    validateFirst={true}
+                                >
+                                    <div className="input-box">
+                                        <Input/>
+                                    </div>
+                                </Form.Item>
+                                <Form.Item
+                                    name="nftAddr"
+                                    label="NFT Address"
+                                    validateTrigger="onBlur"
+                                    validateFirst={true}
+                                >
+                                    <div className="input-box">
+                                        <Input/>
+                                    </div>
+                                </Form.Item>
+
+                                <div className="btns">
+                                    <Button className="add-btn" type="primary" onClick={() => {
+                                        handleSetNFT()
+                                    }}>Submit</Button>
+                                </div>
+                            </Form>
+
                         </div>
                     </div>
                 </div>
@@ -1137,8 +1218,8 @@ const OgPoolAdmin = (props) => {
                                             </div>
 
                                             <div className="value">
-                                                <p><img src={eth} style={{marginTop: '-5px', marginRight: '10px'}}/>
-                                                    {totalDonate} ETH</p>
+                                                <p><img src={USDTIcon} width={20} height={20} style={{marginTop: '-5px', marginRight: '10px'}}/>
+                                                    {totalDonate} </p>
                                             </div>
                                         </div>
 
@@ -1445,11 +1526,11 @@ const OgPoolAdmin = (props) => {
                             </div>
 
                             <Form form={form} name="control-hooks" className="form">
-                                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => {
+                                {[0, 1, 2, 3, 4, 5, 6].map(i => {
                                     return (
                                         <Form.Item
                                             name={"teamRate" + i}
-                                            label="Team Rate"
+                                            label={"Team Rate" + (i + 1)}
                                             validateTrigger="onBlur"
                                             validateFirst={true}
                                         >
@@ -1657,7 +1738,7 @@ const OgPoolAdmin = (props) => {
                                 Add Invite FLM Rate
                             </div>
                             <Form form={form2} name="control-hooks" className="form">
-                                {[0, 1, 2, 3, 4].map((index) => {
+                                {[0, 1, 2, 3, 4,5,6].map((index) => {
                                     return (<>
                                         <h5> Level Admin <strong>{index + 1}</strong></h5>
                                         <Form.Item

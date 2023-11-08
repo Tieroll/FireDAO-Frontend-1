@@ -63,6 +63,10 @@ import OGPoolV9 from "./view/FDTSquare/OGPoolV9/OGPool";
 import OGPoolV9Admin from "./view/FDTSquare/OGPoolV9/OGPoolAdmin";
 import OGV9UserAdmin from "./view/FDTSquare/OGPoolV9/OGUserAdmin";
 
+import OGPoolV7 from "./view/FDTSquare/OGPoolV7/OGPool";
+import OGPoolV7Admin from "./view/FDTSquare/OGPoolV7/OGPoolAdmin";
+import OGV7UserAdmin from "./view/FDTSquare/OGPoolV7/OGUserAdmin";
+
 import FDTRelease from "./view/FDTSquare/FDTRelease/index";
 import FDTReleaseManage from "./view/FDTSquare/FDTReleaseManage/index";
 import FDTOgToFdt from "./view/FDTSquare/FDTOgToFdt"
@@ -183,6 +187,11 @@ function App() {
                                 <Route path="/OGPoolV9" element={<OGPoolV9/>}/>
                                 <Route path="/OGPoolV9Admin" element={<OGPoolV9Admin/>}/>
                                 <Route path="/OGV9UserAdmin" element={<OGV9UserAdmin/>}/>
+
+
+                                <Route path="/OGPoolV7" element={<OGPoolV7/>}/>
+                                <Route path="/OGPoolV7Admin" element={<OGPoolV7Admin/>}/>
+                                <Route path="/OGV7UserAdmin" element={<OGV7UserAdmin/>}/>
 
                                 <Route path="/FDTRelease" element={<FDTRelease/>}/>
                                 <Route path="/FDTReleaseManage" element={<FDTReleaseManage/>}/>

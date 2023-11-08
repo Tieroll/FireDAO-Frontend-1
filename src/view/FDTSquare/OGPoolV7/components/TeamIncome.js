@@ -63,7 +63,7 @@ const OGPoolPublic = (props) => {
         return await viewMethod(contractTemp, state.account, name, params)
     }
     const handleDealMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -72,14 +72,14 @@ const OGPoolPublic = (props) => {
 
 
     const handlePayDealMethod = async (name, params, value) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
         await dealPayMethod(contractTemp, state.account, name, params, value)
     }
     const handleViewMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }

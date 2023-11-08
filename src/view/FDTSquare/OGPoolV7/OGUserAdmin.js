@@ -104,23 +104,22 @@ const OGPoolPublic = (props) => {
         setIsThreeAdmin(isThree)
         setIsFourAdmin(isFour)
         setIsFiveAdmin(isFive)
-
         setIsSixAdmin(isSix)
         setIsSevenAdmin(isSeven)
 
 
     }
-    const getMyLevel =  ()=>{
-        if(isSecondAdmin){
+    const getMyLevel = () => {
+        if (isSecondAdmin) {
             return 2
         }
-        if(isThreeAdmin){
+        if (isThreeAdmin) {
             return 3
         }
-        if(isFourAdmin){
+        if (isFourAdmin) {
             return 4
         }
-        if(isFiveAdmin){
+        if (isFiveAdmin) {
             return 5
         }
         if (isSixAdmin) {
@@ -145,7 +144,7 @@ const OGPoolPublic = (props) => {
         if (refRes.data && refRes.data.allRegisters && refRes.data.allRegisters.length > 0) {
             const refArr = refRes.data.allRegisters
             if (refArr[0]._user != address) {
-                refArr.forEach(item=>{
+                refArr.forEach(item => {
                     item.level = level
                 })
                 myTeamArr.push(...refArr)
@@ -153,40 +152,47 @@ const OGPoolPublic = (props) => {
             level++
             for (let i = 0; i < refArr.length; i++) {
                 if (refArr[i]._user != address) {
-                    await getRefArr(refArr[i]._user, myTeamArr,level)
+                    await getRefArr(refArr[i]._user, myTeamArr, level)
                 }
             }
         }
         return myTeamArr
 
     }
+
     function getLevelRate(level) {
         switch (level) {
-            case 1:return 8;
-            case 2:return 5;
-            case 3:return 3;
-            case 4:return 2;
-            case 5:return 2;
+            case 1:
+                return 8;
+            case 2:
+                return 5;
+            case 3:
+                return 3;
+            case 4:
+                return 2;
+            case 5:
+                return 2;
         }
         return 0
     }
+
     const getRecord = async () => {
         try {
             let res = await getDonateRecord()
 
             if (res.data && res.data.allRecords) {
                 const recordArr = res.data.allRecords
-                const refArr = await getRefArr(state.account, [],1)
+                const refArr = await getRefArr(state.account, [], 1)
                 let teamRecordArr = [], totalETH = 0, totalFLM = 0
                 refArr.forEach(refItem => {
                     for (let j = 0; j < recordArr.length; j++) {
                         const recordItem = recordArr[j]
                         if (recordItem.addr.toLowerCase() == refItem._user.toLowerCase()) {
                             recordItem.level = refItem.level
-                            recordItem.rate =  getLevelRate(getMyLevel())
+                            recordItem.rate = getLevelRate(getMyLevel())
                             teamRecordArr.push(recordItem)
-                            totalETH = BigNumber(totalETH).plus(recordItem.ethAmount / 10 ** ETHDecimals) *  getLevelRate(getMyLevel()) / 100
-                            totalFLM = BigNumber(totalFLM).plus(recordItem.flmAmount / 10 ** FLMDecimals) *  getLevelRate(getMyLevel()) / 100
+                            totalETH = BigNumber(totalETH).plus(recordItem.ethAmount / 10 ** ETHDecimals) * getLevelRate(getMyLevel()) / 100
+                            totalFLM = BigNumber(totalFLM).plus(recordItem.flmAmount / 10 ** FLMDecimals) * getLevelRate(getMyLevel()) / 100
                         }
                     }
                 })
@@ -246,7 +252,7 @@ const OGPoolPublic = (props) => {
                         )
                     }
                     {
-                        (isSecondAdmin || isThreeAdmin || isFourAdmin || isFiveAdmin) &&
+                        (isSecondAdmin || isThreeAdmin || isFourAdmin || isFiveAdmin || isSixAdmin) &&
 
                         <div className={"nav-item " + (activeNav == 4 ? "active" : "")} onClick={() => {
                             setActiveNav(4)
@@ -281,39 +287,39 @@ const OGPoolPublic = (props) => {
                         </div>
                     </div>
                     <div className="fire-list-box donate-list" style={{minWidth: '100%'}}>
-                            <div className="list-header ">
-                                <div className="col">
-                                    No.
-                                </div>
-                                <div className="col">
-                                    Level
-                                </div>
-                                <div className="col">
-                                    Divide<br/> Percentage
-                                </div>
-                                <div className="col">
-                                    Address
-                                </div>
-                                <div className="col">
-                                    ETH
-                                </div>
-                                <div className="col">
-                                    FDT-OG
-                                </div>
-
-                                <div className="col">
-                                    Price
-                                </div>
-                                <div className="col">
-                                    Cost
-                                </div>
-                                <div className="col">
-                                    Rewards
-                                </div>
-                                <div className="col">
-                                    Time
-                                </div>
+                        <div className="list-header ">
+                            <div className="col">
+                                No.
                             </div>
+                            <div className="col">
+                                Level
+                            </div>
+                            <div className="col">
+                                Divide<br/> Percentage
+                            </div>
+                            <div className="col">
+                                Address
+                            </div>
+                            <div className="col">
+                                ETH
+                            </div>
+                            <div className="col">
+                                FDT-OG
+                            </div>
+
+                            <div className="col">
+                                Price
+                            </div>
+                            <div className="col">
+                                Cost
+                            </div>
+                            <div className="col">
+                                Rewards
+                            </div>
+                            <div className="col">
+                                Time
+                            </div>
+                        </div>
 
                         {
                             teamRecordArr.map((item, index) => (
@@ -387,7 +393,7 @@ const OGPoolPublic = (props) => {
 
             </div>)}
             {
-                activeNav == 4 &&  (
+                activeNav == 4 && (
                     <AddThreeWhiteList
                         isLevel2={isSecondAdmin}
                         isThreeAdmin={isThreeAdmin}

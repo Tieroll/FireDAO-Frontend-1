@@ -25,7 +25,7 @@ const AddThreeWhiteList = ({allRecords, isFiveAdmin}) => {
     const [activeArr, setActiveArr] = useState([])
 
     const handleDealMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -43,7 +43,7 @@ const AddThreeWhiteList = ({allRecords, isFiveAdmin}) => {
     }
 
     const handleViewMethod = async (name, params) => {
-        let contractTemp = await getContractByName("ogV9", state.api,)
+        let contractTemp = await getContractByName("ogV7", state.api,)
         if (!contractTemp) {
             message.warn("Please connect", 5)
         }
@@ -64,10 +64,10 @@ const AddThreeWhiteList = ({allRecords, isFiveAdmin}) => {
             arr.push(form2.getFieldValue()["address" + i])
         }
         if (isFiveAdmin) {
-            await handleDealMethod("setActivateAccountForL5", [arr])
+            await handleDealMethod("setActivateAccountForLevelSeven", [arr])
 
         } else {
-            await handleDealMethod("setActivateAccountForL2", [arr])
+            await handleDealMethod("setActivateAccountForLevelTwo", [arr])
         }
         getActivateAccount()
     }
