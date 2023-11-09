@@ -278,8 +278,8 @@ const OGPoolPublic = (props) => {
                     </div>
                     <div className="flex-box total-box">
                         <div className="item">
-                            <div className="name">ETH Total Income</div>
-                            <strong><img src={ethereum} width={20} height={20} alt=""/> {showNum(totalETH)}</strong>
+                            <div className="name">UDST Total Income</div>
+                            <strong><img src={USDTIcon} width={20} height={20} alt=""/> {showNum(totalETH)}</strong>
                         </div>
                         <div className="item">
                             <div className="name">FLM Total Income</div>
@@ -301,7 +301,7 @@ const OGPoolPublic = (props) => {
                                 Address
                             </div>
                             <div className="col">
-                                ETH
+                                USDT
                             </div>
                             <div className="col">
                                 FDT-OG

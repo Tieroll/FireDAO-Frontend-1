@@ -738,7 +738,7 @@ export default styled.div`
         width: 40px;
         height: 40px;
         position: absolute;
-        top: 90px;
+        top: 80px;
 
         left: 45%;
       }

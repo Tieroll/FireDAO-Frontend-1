@@ -65,6 +65,7 @@ const OGPoolPublic = (props) => {
 
     const [fdtBalance, setFdtBalance] = useState(0)
     const [usdtBalance, setUSDTBalance] = useState(0)
+    const [allowance, setAllowance] = useState(0)
 
     const [activeUsedAmount, setActiveUsedAmount] = useState(0)
     const [activateAccountUsedAmount, setActivateAccountUsedAmount] = useState(0)
@@ -210,8 +211,11 @@ const OGPoolPublic = (props) => {
     }
     const getBalanceOfUSDT = async () => {
         let res2 = await handleCoinViewMethod("balanceOf", "USDT", [state.account])
-        console.log(res2)
         setUSDTBalance(BigNumber(res2).dividedBy(10 ** USDTDecimals).toString())
+    }
+    const getAllowanceUSDT = async () => {
+        let res2 = await handleCoinViewMethod("allowance", "USDT", [state.account,addressMap["ogV7"].address])
+        setAllowance(BigNumber(res2).dividedBy(10 ** USDTDecimals).toString())
     }
     const getTotalDonate = async () => {
         let res = await handleViewMethod("totalDonate", [])
@@ -238,6 +242,7 @@ const OGPoolPublic = (props) => {
     const handleApprove= async () => {
         let contractTemp = await getContractByName("USDT", state.api,)
         await dealMethod(contractTemp, state.account, "approve", [addressMap["ogV7"].address, MaxUint256])
+        getAllowanceUSDT()
 
     }
     const handleRegister = async () => {
@@ -250,7 +255,7 @@ const OGPoolPublic = (props) => {
             }
             refAddr = form.getFieldValue().referralCode
         }
-
+        console.log(refAddr)
         await handleDealMethod("register", [refAddr.toString()])
         await getMyStatus()
         setTimeout(() => {
@@ -267,7 +272,6 @@ const OGPoolPublic = (props) => {
         const isT = await handleViewMethod("checkAddrForAdminLevelThree", [state.account])
         const isF = await handleViewMethod("checkAddrForAdminLevelFour", [state.account])
         const isFive = await handleViewMethod("checkAddrForAdminLevelFive", [state.account])
-
 
         const isSix = await handleViewMethod("checkAddrForAdminLevelSix", [state.account])
         const isSeven = await handleViewMethod("checkAddrForAdminLevelSeven", [state.account])
@@ -327,7 +331,7 @@ const OGPoolPublic = (props) => {
             getActivateAccount()
             getUserBuyMax()
 
-
+            getAllowanceUSDT()
             await getAddressRecommender(state.account)
 
 
@@ -655,12 +659,14 @@ const OGPoolPublic = (props) => {
                             Active Accounts
                         </div>}
 
-                    {(isSecondAdmin | isThreeAdmin || isFourAdmin || isFiveAdmin) &&
+                    {(isSecondAdmin | isThreeAdmin || isFourAdmin || isFiveAdmin||isSixAdmin||isSevenAdmin) &&
 
                         <div className={"nav-item " + (activeNav == 4 ? "active" : "")} onClick={() => {
                             history("/OGV7UserAdmin")
                         }}>
-                            Lv{isSecondAdmin ? 2 : ""}{isThreeAdmin ? 3 : ""}{isFourAdmin ? 4 : ""}{isFiveAdmin ? 5 : ""} Admin
+                            {isSecondAdmin ? "Lv2" : ""}{isThreeAdmin ? "Level King" : ""}{isFourAdmin ? "Level Diamond" : ""}{isFiveAdmin ? "Level Gold" : ""}
+                            {isSixAdmin ? "Level Silver" : ""}
+                            {isSevenAdmin ? "Level Bronze" : ""}Admin
                         </div>
 
                     }
@@ -864,16 +870,18 @@ const OGPoolPublic = (props) => {
                                         {
                                             status == 1 && inputValue > 0 && !BigNumber(usdtBalance).lt(inputValue) &&
                                             <div>
-                                                <Button type="primary" className="donate" onClick={() => {
+                                                {(BigNumber(allowance).lt(inputValue) ) ?
+                                                    <Button type="primary" className="donate" onClick={() => {
                                                     handleApprove()
                                                 }}>
                                                     Approve
-                                                </Button>
-                                                <Button type="primary" className="donate" onClick={() => {
+                                                </Button>:
+                                                    <Button type="primary" className="donate" onClick={() => {
                                                     exchangeFdt()
                                                 }}>
                                                     Donate
-                                                </Button>
+                                                </Button>}
+
                                             </div>
 
                                         }
@@ -884,10 +892,9 @@ const OGPoolPublic = (props) => {
 
 
                                     <div className="tip">
-                                        I have already donated {showNum(userTotalBuy)} ETH, I can donate up
-                                        to {showNum(userBuyMax)} ETH, I can continue
-                                        donating {showNum(BigNumber(userBuyMax).minus(userTotalBuy))} ETH.
-                                        {/* 1FDT-OG = {salePrice} USD ，Donate up to 2ETH */}
+                                        I have already donated {showNum(userTotalBuy)} USDT, I can donate up
+                                        to {showNum(userBuyMax)} USDT, I can continue
+                                        donating {showNum(BigNumber(userBuyMax).minus(userTotalBuy))} USDT.
                                     </div>
                                 </Form>
                             </div>
@@ -1081,7 +1088,7 @@ const OGPoolPublic = (props) => {
                                         Address
                                     </div>
                                     <div className="col">
-                                        ETH Income
+                                        USDT Income
                                     </div>
                                     <div className="col">
                                         FLM Income
@@ -1151,7 +1158,7 @@ const OGPoolPublic = (props) => {
                                         Address
                                     </div>
                                     <div className="col">
-                                        ETH
+                                        USDT
                                     </div>
                                     <div className="col">
                                         FDT-OG

@@ -253,7 +253,7 @@ const OgPoolAdmin = (props) => {
             return
         }
         let tempArr = [], totalRate = 0
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 7; i++) {
             const inviteRate = await handleViewMethod("inviteRate", [i])
             tempArr.push({index: i + 1, inviteRate: inviteRate.toString()})
             totalRate = BigNumber(totalRate).plus(inviteRate)
@@ -321,8 +321,8 @@ const OgPoolAdmin = (props) => {
     }
     const addInviteFLMRate = async () => {
         let tempArr = []
-        for(let i=6;i>=0;i--){
-            tempArr.push(form2.getFieldValue()["inviteFLMRate"+i]*100)
+        for (let i = 6; i >= 0; i--) {
+            tempArr.push(form2.getFieldValue()["inviteFLMRate" + i] * 100)
         }
 
         await handleDealMethod("addFlmRate", [tempArr])
@@ -332,8 +332,8 @@ const OgPoolAdmin = (props) => {
     const addInviteRate = async () => {
 
         let tempArr = []
-        for(let i=0;i<5;i++){
-            tempArr.push(form2.getFieldValue()["inviteRate"+i]*100)
+        for (let i = 0; i < 7; i++) {
+            tempArr.push(form2.getFieldValue()["inviteRate" + i] * 100)
         }
 
 
@@ -382,7 +382,7 @@ const OgPoolAdmin = (props) => {
         await handleDealMethod("pushNFT", [paramsArr])
     }
     const handleSetNFT = async () => {
-        await handleDealMethod("setValueToNft", [form.getFieldValue().usdtAmount,form.getFieldValue().nftAddr])
+        await handleDealMethod("setValueToNft", [form.getFieldValue().usdtAmount, form.getFieldValue().nftAddr])
     }
     const handleSetFSC = async () => {
         await handleDealMethod("setFSC", [form.getFieldValue().FSC])
@@ -698,7 +698,7 @@ const OgPoolAdmin = (props) => {
             title: 'InviteRate',
             dataIndex: 'inviteRate',
             key: 'inviteRate',
-            render: (text) => <span>{text/100}%</span>,
+            render: (text) => <span>{text / 100}%</span>,
         },
     ]
     return (
@@ -899,10 +899,10 @@ const OgPoolAdmin = (props) => {
                         </div>
                         <div className="panel-container">
                             <div className="panel-title">
-                                Init NFT Reward 
+                                Init NFT Reward
                             </div>
                             <Form form={form} name="control-hooks" className="form">
-                                {[0, 1, 2, 3, 4,5,6].map(i => {
+                                {[0, 1, 2, 3, 4, 5, 6].map(i => {
                                     return (
                                         <Form.Item
                                             name={"nft" + i}
@@ -930,7 +930,7 @@ const OgPoolAdmin = (props) => {
                         </div>
                         <div className="panel-container">
                             <div className="panel-title">
-                                SET NFT Reward 
+                                SET NFT Reward
                             </div>
                             <Form form={form} name="control-hooks" className="form">
                                 <Form.Item
@@ -1218,7 +1218,8 @@ const OgPoolAdmin = (props) => {
                                             </div>
 
                                             <div className="value">
-                                                <p><img src={USDTIcon} width={20} height={20} style={{marginTop: '-5px', marginRight: '10px'}}/>
+                                                <p><img src={USDTIcon} width={20} height={20}
+                                                        style={{marginTop: '-5px', marginRight: '10px'}}/>
                                                     {totalDonate} </p>
                                             </div>
                                         </div>
@@ -1423,7 +1424,7 @@ const OgPoolAdmin = (props) => {
                                 Add Invite Rate
                             </div>
                             <Form form={form2} name="control-hooks" className="form">
-                                {[0, 1, 2, 3, 4].map((index) => {
+                                {[0, 1, 2, 3, 4, 5, 6].map((index) => {
                                     return (<>
                                         <h5> Level Admin <strong>{index + 1}</strong></h5>
                                         <Form.Item
@@ -1616,7 +1617,7 @@ const OgPoolAdmin = (props) => {
 
                                         </div>
                                         <div className="col ">
-                                            {item.rate.toString()}%
+                                            {(item.rate / 100).toString()}%
                                         </div>
                                         <div className="col del" onClick={() => {
                                             delARRow(item)
@@ -1738,7 +1739,7 @@ const OgPoolAdmin = (props) => {
                                 Add Invite FLM Rate
                             </div>
                             <Form form={form2} name="control-hooks" className="form">
-                                {[0, 1, 2, 3, 4,5,6].map((index) => {
+                                {[0, 1, 2, 3, 4, 5, 6].map((index) => {
                                     return (<>
                                         <h5> Level Admin <strong>{index + 1}</strong></h5>
                                         <Form.Item

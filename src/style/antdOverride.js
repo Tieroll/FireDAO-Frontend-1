@@ -200,8 +200,8 @@ const AntdOverride = createGlobalStyle`
 
       svg{
         position: relative;
-        transform: translateX(-800px);
-        filter: drop-shadow(#fff 800px 0);
+        transform: translateX(-1800px);
+        filter: drop-shadow(#fff 1800px 0);
         border-left: 4px solid transparent;
         border-right: 4px solid transparent;
         width: 20px;
