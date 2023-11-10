@@ -39,7 +39,7 @@ const OGPoolPublic = (props) => {
     const [isSevenAdmin, setIsSevenAdmin] = useState(true)
 
     const [teamRecordArr, setTeamRecordArr] = useState([])
-    const [totalETH, setTotalEth] = useState(0)
+    const [totalUSDT, settotalUSDT] = useState(0)
     const [totalFLM, setTotalFlm] = useState(0)
 
     const [total, setTotal] = useState(0)
@@ -183,7 +183,7 @@ const OGPoolPublic = (props) => {
             if (res.data && res.data.allRecords) {
                 const recordArr = res.data.allRecords
                 const refArr = await getRefArr(state.account, [], 1)
-                let teamRecordArr = [], totalETH = 0, totalFLM = 0
+                let teamRecordArr = [], totalUSDT = 0, totalFLM = 0
                 refArr.forEach(refItem => {
                     for (let j = 0; j < recordArr.length; j++) {
                         const recordItem = recordArr[j]
@@ -191,12 +191,12 @@ const OGPoolPublic = (props) => {
                             recordItem.level = refItem.level
                             recordItem.rate = getLevelRate(getMyLevel())
                             teamRecordArr.push(recordItem)
-                            totalETH = BigNumber(totalETH).plus(recordItem.ethAmount / 10 ** ETHDecimals) * getLevelRate(getMyLevel()) / 100
+                            totalUSDT = BigNumber(totalUSDT).plus(recordItem.usdtAmount / 10 ** USDTDecimals) * getLevelRate(getMyLevel()) / 100
                             totalFLM = BigNumber(totalFLM).plus(recordItem.flmAmount / 10 ** FLMDecimals) * getLevelRate(getMyLevel()) / 100
                         }
                     }
                 })
-                setTotalEth(totalETH.toString())
+                settotalUSDT(totalUSDT.toString())
                 setTotalFlm(totalFLM.toString())
                 setTeamRecordArr(teamRecordArr)
             }
@@ -279,7 +279,7 @@ const OGPoolPublic = (props) => {
                     <div className="flex-box total-box">
                         <div className="item">
                             <div className="name">UDST Total Income</div>
-                            <strong><img src={USDTIcon} width={20} height={20} alt=""/> {showNum(totalETH)}</strong>
+                            <strong><img src={USDTIcon} width={20} height={20} alt=""/> {showNum(totalUSDT)}</strong>
                         </div>
                         <div className="item">
                             <div className="name">FLM Total Income</div>
@@ -310,9 +310,7 @@ const OGPoolPublic = (props) => {
                             <div className="col">
                                 Price
                             </div>
-                            <div className="col">
-                                Cost
-                            </div>
+                         
                             <div className="col">
                                 Rewards
                             </div>
@@ -343,7 +341,7 @@ const OGPoolPublic = (props) => {
                                     <div className="col">
                                         <img width={20} height={20} style={{marginRight: "3px"}} src={ethereum}
                                              alt=""/>
-                                        {showNum(item.ethAmount / 10 ** ETHDecimals, 3)}
+                                        {showNum(item.usdtAmount / 10 ** USDTDecimals, 3)}
                                     </div>
                                     <div className="col">
                                         <img width={20} height={20} style={{marginRight: "3px"}} src={FDTIcon}
@@ -355,16 +353,12 @@ const OGPoolPublic = (props) => {
                                              alt=""/>
                                         {showNum(0.01)}
                                     </div>
-                                    <div className="col cost">
-                                        <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
-                                             alt=""/>
-                                        {showNum(item.usdtAmount / 10 ** USDTDecimals, 3)}
-                                    </div>
+                               
                                     <div className="col ">
                                         <div className="item">
                                             <img width={20} height={20} style={{marginRight: "3px"}}
                                                  src={ethereum} alt=""/>
-                                            {showNum(BigNumber(item.ethAmount / 10 ** ETHDecimals).multipliedBy(item.rate / 100), 3)}
+                                            {showNum(BigNumber(item.usdtAmount / 10 ** USDTDecimals).multipliedBy(item.rate / 100), 3)}
                                         </div>
                                         <div className="item" style={{marginLeft: "10px"}}>
                                             <img width={20} height={20} style={{marginRight: "3px"}}

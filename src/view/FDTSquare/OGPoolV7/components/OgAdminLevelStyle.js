@@ -1,5 +1,9 @@
 import styled from "styled-components";
 export default  styled.div`
+  .list-item,.list-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   .model-dialog {
     h3 {
       color: #796B6B;

@@ -33,9 +33,9 @@ import {
     getRecommender,
     getAddressFromId,
     getAllInvites
-} from "../../../graph/donateV9";
+} from "../../../graph/donateV7";
 import OGPoolStyle from "./OGPoolStyle";
-import {ETHDecimals, FDTDecimals, USDTDecimals, FLMDecimals, ZeroAddress} from "../../../config/constants";
+import { FDTDecimals, USDTDecimals, FLMDecimals, ZeroAddress} from "../../../config/constants";
 import search from "../../../imgs/search.png";
 import {dealTime} from "../../../utils/timeUtil";
 import coinInfo from "../../../config/coinInfo";
@@ -80,7 +80,7 @@ const OGPoolPublic = (props) => {
     const [nftType, setNFTType] = useState("")
 
     const [levelCountObj, setLevelCountObj] = useState({})
-    const [rewardTotalETH, setRewardTotalETH] = useState({})
+    const [rewardTotalUSDT, setRewardTotalUSDT] = useState({})
     const [rewardTotalFLM, setRewardTotalFLM] = useState({})
     const [myTeamRecord, setMyTeamRecord] = useState([])
     const [inviteRateArr, setInvArr] = useState([])
@@ -183,7 +183,7 @@ const OGPoolPublic = (props) => {
                 )}
             </div>
             <div className="col ">
-                {item.ethAmount / 10 ** ETHDecimals}
+                {item.usdtAmount / 10 ** USDTDecimals}
             </div>
             <div className="col">
                 {BigNumber(item.usdtAmount / 10 ** USDTDecimals).toFixed(2)}
@@ -360,6 +360,7 @@ const OGPoolPublic = (props) => {
 
     const getAddressRecommender = async (address) => {
         const res = await getRecommender(address)
+        console.log(res)
         if (res && res.data && res.data.allRegisters[0]) {
             setMyRecommender(res.data.allRegisters[0].recommenders)
             setMyId(res.data.allRegisters[0].Contract_id)
@@ -369,13 +370,13 @@ const OGPoolPublic = (props) => {
         }
     }
     const getUserBuyMax = async () => {
-        const res = await handleViewMethod("userBuyMax", [])
         const buyNum = await handleViewMethod("userTotalBuy", [state.account])
-        setUserTotalBuy(BigNumber(buyNum).dividedBy(10 ** ETHDecimals).toString())
-        setUserBuyMax(BigNumber(res).dividedBy(10 ** ETHDecimals).toString())
+        setUserTotalBuy(BigNumber(buyNum).dividedBy(10 ** USDTDecimals).toString())
+
     }
     const getRefArr = async (address, myTeamArr, level) => {
         let refRes = await getAllRegisters(address)
+        console.log(refRes)
         if (refRes.data && refRes.data.allRegisters && refRes.data.allRegisters.length > 0) {
             const refArr = refRes.data.allRegisters
             if (refArr[0]._user != address) {
@@ -461,7 +462,7 @@ const OGPoolPublic = (props) => {
 
             }
             // operate reward and get record
-            let totalETH = 0, totalFLM = 0
+            let totalUSDT = 0, totalFLM = 0
 
             for (let i = 0; i < myTeamArr.length; i++) {
                 const item = myTeamArr[i]
@@ -471,9 +472,9 @@ const OGPoolPublic = (props) => {
                         if(!rate){
                             rate = 0
                         }
-                        item.ethIncome = BigNumber(record.ethAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** ETHDecimals).toString()
+                        item.usdtIncome = BigNumber(record.usdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** USDTDecimals).toString()
                         item.flmIncome = BigNumber(record.fdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** FLMDecimals).toString()
-                        totalETH = BigNumber(totalETH).plus(item.ethIncome)
+                        totalUSDT = BigNumber(totalUSDT).plus(item.usdtIncome)
                         totalFLM = BigNumber(totalFLM).plus(item.flmIncome)
                         if (item.level) {
                             record.level = item.level
@@ -483,11 +484,18 @@ const OGPoolPublic = (props) => {
                     }
                 })
             }
-            setMyTeamRecord(myTeamRecord)
-            setMyTeamArr(myTeamArr)
+            console.log(myTeamRecord,myTeamArr,levelRewardObj,totalFLM,totalUSDT)
+            if(myTeamArr.length==0){
+                setMyTeamArr(myTeamArr)
+
+            }
+            if(myTeamRecord.length==0){
+                setMyTeamRecord(myTeamRecord)
+
+            }
             setLevelCountObj(levelRewardObj)
-            setRewardTotalFLM(totalFLM)
-            setRewardTotalETH(totalETH)
+            setRewardTotalFLM(totalFLM.toString())
+            setRewardTotalUSDT(totalUSDT.toString())
         }
 
     }
@@ -507,8 +515,16 @@ const OGPoolPublic = (props) => {
     const getInviteRecord = async () => {
         try {
             const res = await getAllInvites()
+            let arr1 = res.data.allInviteAddr
+            let arr2= res.data.allInviteRate
+            arr1.forEach((item,index)=>{
+                item = {
+                    ...item,
+                    ...arr2[index]
+                }
+            })
             if (res && res.data) {
-                setInvRecord(res.data.allInvites)
+                setInvRecord(arr1)
             }
         }catch (e) {
             console.log(e)
@@ -891,11 +907,7 @@ const OGPoolPublic = (props) => {
                                     }
 
 
-                                    <div className="tip">
-                                        I have already donated {showNum(userTotalBuy)} USDT, I can donate up
-                                        to {showNum(userBuyMax)} USDT, I can continue
-                                        donating {showNum(BigNumber(userBuyMax).minus(userTotalBuy))} USDT.
-                                    </div>
+
                                 </Form>
                             </div>
                         </div>
@@ -1025,7 +1037,7 @@ const OGPoolPublic = (props) => {
                                     Team Income
                                     <div className="right flex-box">
                                         <div className="reward-item">
-                                            <img width={20} src={ethereum} alt=""/> {showNum(rewardTotalETH)}
+                                            <img width={20} src={USDTIcon} alt=""/> {showNum(rewardTotalUSDT)}
                                         </div>
                                         <div className="reward-item">
                                             <img width={20} src={FDTIcon} alt=""/> {showNum(rewardTotalFLM)}
@@ -1096,41 +1108,43 @@ const OGPoolPublic = (props) => {
 
                                 </div>
                                 {
-                                    myTeam.map((item, index) => (
-                                        index >= pageCount * (curPage - 1) && index < pageCount * curPage &&
-                                        <div className="list-item " key={index}>
-                                            <div className="col">
-                                                {item.level}
-                                            </div>
-                                            <div className="col no">
-                                                {index + 1}
-                                            </div>
-                                            <div className="col id" style={{cursor: "pointer"}} onClick={() => {
-                                                setSearchData(item.Contract_id);
-                                                handleSearch()
-                                            }}>
-                                                {(item.Contract_id || item.Contract_id == 0) ? item.Contract_id : "--"}
-                                            </div>
-                                            <div className="col ">
-                                                <div className="address">
-                                                    <a target="_blank"
-                                                       href={develop.ethScan + "/address/" + item._user}> {formatAddress(item._user)} </a>
+                                    myTeam.map((item, index) => {
+                                        return (
+                                            index >= pageCount * (curPage - 1) && index < pageCount * curPage &&
+                                            <div className="list-item " key={index}>
+                                                <div className="col">
+                                                    {item.level}
+                                                </div>
+                                                <div className="col no">
+                                                    {index + 1}
+                                                </div>
+                                                <div className="col id" style={{cursor: "pointer"}} onClick={() => {
+                                                    setSearchData(item.Contract_id);
+                                                    handleSearch()
+                                                }}>
+                                                    {(item.Contract_id || item.Contract_id == 0) ? item.Contract_id : "--"}
+                                                </div>
+                                                <div className="col ">
+                                                    <div className="address">
+                                                        <a target="_blank"
+                                                           href={develop.ethScan + "/address/" + item._user}> {formatAddress(item._user)} </a>
+                                                    </div>
+
+                                                </div>
+                                                <div className="col flex-box">
+                                                    <img width={20} height={20} style={{marginRight: "3px"}} src={ethereum}
+                                                         alt=""/>
+                                                    {showNum(item.usdtIncome, 6)}
+                                                </div>
+                                                <div className="col flex-box">
+                                                    <img width={20} height={20} style={{marginRight: "3px"}} src={FLMIcon}
+                                                         alt=""/>
+                                                    {showNum(item.flmIncome, 3)}
                                                 </div>
 
                                             </div>
-                                            <div className="col flex-box">
-                                                <img width={20} height={20} style={{marginRight: "3px"}} src={ethereum}
-                                                     alt=""/>
-                                                {showNum(item.ethIncome, 6)}
-                                            </div>
-                                            <div className="col flex-box">
-                                                <img width={20} height={20} style={{marginRight: "3px"}} src={FLMIcon}
-                                                     alt=""/>
-                                                {showNum(item.flmIncome, 3)}
-                                            </div>
-
-                                        </div>
-                                    ))
+                                        )
+                                    })
                                 }
 
 
@@ -1167,9 +1181,7 @@ const OGPoolPublic = (props) => {
                                     <div className="col">
                                         Price
                                     </div>
-                                    <div className="col">
-                                        Cost
-                                    </div>
+
                                     <div className="col">
                                         Rewards
                                     </div>
@@ -1177,8 +1189,9 @@ const OGPoolPublic = (props) => {
                                         Time
                                     </div>
                                 </div>
+
                                 {
-                                    myTeamRecord.map((item, index) => (
+                                    myTeamRecord.length>0&& myTeamRecord.map((item, index) => (
                                         index >= pageCount * (curPage - 1) && index < pageCount * curPage &&
                                         <div className="list-item" key={index}>
                                             <div className="col no">
@@ -1188,7 +1201,7 @@ const OGPoolPublic = (props) => {
                                                 {item.level}
                                             </div>
                                             <div className="col">
-                                                {item.rate}%
+                                                {showNum(item.rate)}%
                                             </div>
                                             <div className="col ">
                                                 <div className="address">
@@ -1197,30 +1210,21 @@ const OGPoolPublic = (props) => {
                                                 </div>
                                             </div>
                                             <div className="col">
-                                                <img width={20} height={20} style={{marginRight: "3px"}} src={ethereum}
+                                                <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
                                                      alt=""/>
-                                                {showNum(item.ethAmount / 10 ** ETHDecimals, 3)}
+                                                {showNum(item.usdtAmount / 10 ** USDTDecimals, 3)}
                                             </div>
                                             <div className="col">
                                                 <img width={20} height={20} style={{marginRight: "3px"}} src={FDTIcon}
                                                      alt=""/>
                                                 {showNum(item.fdtAmount / 10 ** FDTDecimals, 1)}
                                             </div>
-                                            <div className="col price">
-                                                <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
-                                                     alt=""/>
-                                                {showNum(0.01)}
-                                            </div>
-                                            <div className="col cost">
-                                                <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
-                                                     alt=""/>
-                                                {showNum(item.usdtAmount / 10 ** USDTDecimals, 3)}
-                                            </div>
+
                                             <div className="col flex-box ">
                                                 <div className="item flex-box">
                                                     <img width={20} height={20} style={{marginRight: "3px"}}
                                                          src={ethereum} alt=""/>
-                                                    {showNum(BigNumber(item.ethAmount / 10 ** ETHDecimals).multipliedBy(item.rate / 100), 3)}
+                                                    {showNum(BigNumber(item.usdtAmount / 10 ** USDTDecimals).multipliedBy(item.rate / 100), 3)}
                                                 </div>
                                                 <div className="item flex-box" style={{marginLeft: "10px"}}>
                                                     <img width={20} height={20} style={{marginRight: "3px"}}
@@ -1234,7 +1238,6 @@ const OGPoolPublic = (props) => {
                                         </div>
                                     ))
                                 }
-
 
                             </div>
                             <div className="pagination">
@@ -1319,8 +1322,6 @@ const OGPoolPublic = (props) => {
                                 <div className="col">
                                     No.
                                 </div>
-
-
                                 <div className="col ">
                                     Address
                                 </div>

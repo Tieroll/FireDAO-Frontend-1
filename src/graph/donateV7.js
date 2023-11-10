@@ -1,12 +1,13 @@
 import {fetchQueryBase} from "./index";
-const name = "patton-sr/arbog"
+
+const name = "patton-sr/ogfdt"
+
 export function getDonateRecord() {
     return fetchQueryBase(name, {
         text: `{
            allRecords(first:1000 orderBy:no orderDirection:desc){
               no
               addr
-              ethAmount
               usdtAmount
               fdtAmount
               flmAmount
@@ -15,24 +16,34 @@ export function getDonateRecord() {
         }`
     }, "")
 }
+
 export function getAllInvites() {
     return fetchQueryBase(name, {
         text: `{
-         allInvites(first: 1000){
+         allInviteAddr(first: 1000){
                 recommender1
                 recommender2
                 recommender3
                 recommender4
                 recommender5
+                recommender6
+                recommender7
+                addr
+                blockTimestamp
+        }
+        allInviteRate(first: 1000){
                 rate1
                 rate2
                 rate3
                 rate4
                 rate5
+                rate6
+                rate7
                 addr
                 blockTimestamp
             }
-        }`
+        }
+        `
     }, "")
 }
 
@@ -54,7 +65,6 @@ export function getSecondDonateRecord(addr) {
                 id
                 no
                 addr
-                ethAmount
                 usdtAmount
                 fdtAmount
                 time
@@ -70,7 +80,7 @@ export function getThreeDonateRecord(addr) {
             id
             no
             addr
-            ethAmount
+            
             usdtAmount
             fdtAmount
             time
@@ -101,7 +111,7 @@ export function getSeedDonateRecord() {
 export function getAllRegisters(address) {
     return fetchQueryBase(name, {
         text: `{
-            allRegisters(first:1000,where: {recommenders_contains: "${address}"}) {
+            allRegisters(first:1000,where: {recommenders: "${address}"}) {
                 Contract_id
                 recommenders
                 _user
@@ -121,6 +131,7 @@ export function getRecommender(address) {
         }`
     }, "")
 }
+
 export function getAddressFromId(id) {
     return fetchQueryBase(name, {
         text: `{

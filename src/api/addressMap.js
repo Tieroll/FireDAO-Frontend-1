@@ -44,7 +44,7 @@ CONTRACTS = {
     PrivateExchangePoolOG: {address: "0x65d741A9d21cA93AB8aC202b7e6693AE3656CEFa", abi: PrivateExchangePoolOG},
     PrivateExchangePoolOGV5: {address: "0x9B635aC49F76662b5a7b8BC02C664Aa3a6EBAd76", abi: PrivateExchangePoolOGV5},
     ogV9: {address: "0xB37bb07b76DC2986828A8160647534FdD305510B", abi: ogV9},
-    ogV7: {address: "0xe1D25d950159C0D8C2923C5E53d37173Dd67780f", abi: ogV7},
+    ogV7: {address: "0x664C424ab48B2F20B96BBea0e9392215c8aA26dE", abi: ogV7},
 
     FDTOGV9: {address: "0x445FCbFbf1Cc2E8ECEC5B53E8A184D9Cd5ffA534"},
     FLMV9: {address: "0x2741B9B078b1D10bcb0EeeccDdC044394952B8c4"},

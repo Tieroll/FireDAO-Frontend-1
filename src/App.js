@@ -67,6 +67,9 @@ import OGPoolV7 from "./view/FDTSquare/OGPoolV7/OGPool";
 import OGPoolV7Admin from "./view/FDTSquare/OGPoolV7/OGPoolAdmin";
 import OGV7UserAdmin from "./view/FDTSquare/OGPoolV7/OGUserAdmin";
 
+import NFTView from "./view/FDTSquare/OGPoolV7/NFT/NFTView"
+
+
 import FDTRelease from "./view/FDTSquare/FDTRelease/index";
 import FDTReleaseManage from "./view/FDTSquare/FDTReleaseManage/index";
 import FDTOgToFdt from "./view/FDTSquare/FDTOgToFdt"
@@ -101,6 +104,8 @@ import LPMining from "./view/Operation/LPMining"
 import LPMiningManage from "./view/Operation/LPMining/Manage"
 import FDTLockMining from "./view/Operation/FDTLockMining"
 import FDTLockMiningManage from "./view/Operation/FDTLockMining/Manage"
+
+
 
 function App() {
     const history = useNavigate();
@@ -192,6 +197,8 @@ function App() {
                                 <Route path="/OGPoolV7" element={<OGPoolV7/>}/>
                                 <Route path="/OGPoolV7Admin" element={<OGPoolV7Admin/>}/>
                                 <Route path="/OGV7UserAdmin" element={<OGV7UserAdmin/>}/>
+
+                                <Route path="/NFTView" element={<NFTView/>}/>
 
                                 <Route path="/FDTRelease" element={<FDTRelease/>}/>
                                 <Route path="/FDTReleaseManage" element={<FDTReleaseManage/>}/>
