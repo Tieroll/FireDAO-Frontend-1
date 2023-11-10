@@ -44,7 +44,6 @@ export function showNum(val, decimals) {
         return BigNumber(val.toString()).toFixed(0)
     }
     if (decimals < 3) {
-
         return val ? BigNumber((BigNumber(val).toFixed(decimals))).toLocaleString() : 0
     }
     if (val) {

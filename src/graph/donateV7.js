@@ -20,7 +20,7 @@ export function getDonateRecord() {
 export function getAllInvites() {
     return fetchQueryBase(name, {
         text: `{
-         allInviteAddr(first: 1000){
+         allInviteAddrs(first: 1000){
                 recommender1
                 recommender2
                 recommender3
@@ -31,7 +31,7 @@ export function getAllInvites() {
                 addr
                 blockTimestamp
         }
-        allInviteRate(first: 1000){
+        allInviteRates(first: 1000){
                 rate1
                 rate2
                 rate3

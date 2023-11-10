@@ -190,7 +190,7 @@ const OGPoolPublic = (props) => {
             </div>
 
             <div className="col">
-                {item.rate}%
+                {showNum(item.rate)}%
             </div>
             <div className="col ">
                 {BigNumber(item.fdtAmount / 10 ** FDTDecimals).toFixed(2)}
@@ -417,6 +417,12 @@ const OGPoolPublic = (props) => {
                 if(item.recommender5.toLowerCase() == state.account.toLowerCase()){
                     return item.rate5
                 }
+                if(item.recommender6.toLowerCase() == state.account.toLowerCase()){
+                    return item.rate6
+                }
+                if(item.recommender7.toLowerCase() == state.account.toLowerCase()){
+                    return item.rate7
+                }
             }
         }
         return 0
@@ -438,6 +444,8 @@ const OGPoolPublic = (props) => {
                 level3Total: 0,
                 level4Total: 0,
                 level5Total: 0,
+                level6Total: 0,
+                level7Total: 0,
                 total: 0
             }
             // count my team level number
@@ -459,7 +467,12 @@ const OGPoolPublic = (props) => {
                 if (item.level == 5) {
                     levelRewardObj.level5Total++
                 }
-
+                if (item.level == 6) {
+                    levelRewardObj.level6Total++
+                }
+                if (item.level == 7) {
+                    levelRewardObj.level7Total++
+                }
             }
             // operate reward and get record
             let totalUSDT = 0, totalFLM = 0
@@ -472,13 +485,15 @@ const OGPoolPublic = (props) => {
                         if(!rate){
                             rate = 0
                         }
+                        item.usdtAmount = record.usdtAmount
+                        item.flmIncome  = record.flmIncome
                         item.usdtIncome = BigNumber(record.usdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** USDTDecimals).toString()
                         item.flmIncome = BigNumber(record.fdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** FLMDecimals).toString()
                         totalUSDT = BigNumber(totalUSDT).plus(item.usdtIncome)
                         totalFLM = BigNumber(totalFLM).plus(item.flmIncome)
                         if (item.level) {
                             record.level = item.level
-                            record.rate = inviteRateArr[item.level - 1]
+                            record.rate = rate
                             myTeamRecord.push(record)
                         }
                     }
@@ -487,7 +502,6 @@ const OGPoolPublic = (props) => {
             console.log(myTeamRecord,myTeamArr,levelRewardObj,totalFLM,totalUSDT)
             if(myTeamArr.length==0){
                 setMyTeamArr(myTeamArr)
-
             }
             if(myTeamRecord.length==0){
                 setMyTeamRecord(myTeamRecord)
@@ -515,16 +529,17 @@ const OGPoolPublic = (props) => {
     const getInviteRecord = async () => {
         try {
             const res = await getAllInvites()
-            let arr1 = res.data.allInviteAddr
-            let arr2= res.data.allInviteRate
+            let arr1 = res.data.allInviteAddrs
+            let arr2= res.data.allInviteRates
+            let arr= []
             arr1.forEach((item,index)=>{
-                item = {
+                arr.push({
                     ...item,
                     ...arr2[index]
-                }
+                })
             })
             if (res && res.data) {
-                setInvRecord(arr1)
+                setInvRecord(arr)
             }
         }catch (e) {
             console.log(e)
@@ -1191,7 +1206,7 @@ const OGPoolPublic = (props) => {
                                 </div>
 
                                 {
-                                    myTeamRecord.length>0&& myTeamRecord.map((item, index) => (
+                                    myTeamRecord.length>0 && myTeamRecord.map((item, index) => (
                                         index >= pageCount * (curPage - 1) && index < pageCount * curPage &&
                                         <div className="list-item" key={index}>
                                             <div className="col no">
@@ -1212,24 +1227,24 @@ const OGPoolPublic = (props) => {
                                             <div className="col">
                                                 <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
                                                      alt=""/>
-                                                {showNum(item.usdtAmount / 10 ** USDTDecimals, 3)}
+                                                {BigNumber(item.usdtAmount).div(10**USDTDecimals).toFixed(1)}
                                             </div>
                                             <div className="col">
                                                 <img width={20} height={20} style={{marginRight: "3px"}} src={FDTIcon}
                                                      alt=""/>
-                                                {showNum(item.fdtAmount / 10 ** FDTDecimals, 1)}
+                                                {BigNumber(item.flmIncome).toFixed(3)}
                                             </div>
 
                                             <div className="col flex-box ">
                                                 <div className="item flex-box">
                                                     <img width={20} height={20} style={{marginRight: "3px"}}
                                                          src={ethereum} alt=""/>
-                                                    {showNum(BigNumber(item.usdtAmount / 10 ** USDTDecimals).multipliedBy(item.rate / 100), 3)}
+                                                    {BigNumber(item.usdtIncome ).multipliedBy(item.rate / 100).toFixed(3)}
                                                 </div>
                                                 <div className="item flex-box" style={{marginLeft: "10px"}}>
                                                     <img width={20} height={20} style={{marginRight: "3px"}}
                                                          src={FDTIcon} alt=""/>
-                                                    {showNum(BigNumber(item.fdtAmount / 10 ** FLMDecimals).multipliedBy(item.rate / 100), 1)}
+                                                    {BigNumber(item.flmIncome ).multipliedBy(item.rate / 100).toFixed(3)}
                                                 </div>
                                             </div>
                                             <div className="col">
