@@ -165,9 +165,7 @@ const AddThreeWhiteList = ({allRecords, isFiveAdmin}) => {
                                 <div className="col ">
                                     Address
                                 </div>
-                                {/*<div className="col">*/}
-                                {/*    Del*/}
-                                {/*</div>*/}
+
 
                             </div>
 
@@ -179,16 +177,10 @@ const AddThreeWhiteList = ({allRecords, isFiveAdmin}) => {
                                         </div>
 
                                         <div className="col address">
-                                            {item}
+                                            {state.isMobile?formatAddress(item):item}
                                         </div>
 
-                                        {/*<div className="col">*/}
-                                        {/*    <Button className="del-button" onClick={() => {*/}
-                                        {/*        deleteWhite(item)*/}
-                                        {/*    }}>*/}
-                                        {/*        Delete*/}
-                                        {/*    </Button>*/}
-                                        {/*</div>*/}
+
 
                                     </div>)
                                 )

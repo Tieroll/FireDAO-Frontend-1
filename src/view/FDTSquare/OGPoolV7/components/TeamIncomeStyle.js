@@ -100,7 +100,7 @@ export default styled.div`
       }
       .address{
         padding: 3px 6px;
-
+        font-size: 12px;
         color: #CD9E57;
       }
       & {
@@ -178,6 +178,7 @@ export default styled.div`
         width: 150px;
         .address{
           margin-left: 20px;
+          font-size: 12px;
         }
       }
 
@@ -188,8 +189,9 @@ export default styled.div`
     a {
       color: rgba(205, 158, 87, 1);
       text-align: center;
+      font-size: 12px;
     }
-
+    font-size: 12px;
     padding: 0 5px;
     width: 100px;
     border: 1px solid rgba(205, 158, 87, 1);

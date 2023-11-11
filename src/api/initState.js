@@ -1,4 +1,5 @@
 module.exports = {
+    isMobile: false,
     api: null,
     apiError: null,
     apiState: null,

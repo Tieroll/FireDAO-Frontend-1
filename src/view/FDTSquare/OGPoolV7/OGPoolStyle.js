@@ -108,7 +108,7 @@ export default styled.div`
       }
       .address{
         padding: 3px 6px;
-
+        font-size: 12px;
         color: #CD9E57;
       }
       & {

@@ -1,61 +1,37 @@
 import styled from "styled-components";
 
 export default styled.div`
-.my-nft{
-  .nft-list{
-    display: grid;
-    grid-template-columns: repeat(5, minmax(130px, 1fr));
-    gap: 10px;
-    margin: 50px 0;
-    .nft-item{
-      padding: 5%;
-      border-radius: 5%;
-      background: rgba(0,0,0,0.7);
-      img{
-        width: 100%;
-      }
-      .id-box{
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0;
-        font-size: 18px;
+
+  .my-nft {
+    .nft-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 10px;
+      margin: 50px 0;
+
+      .nft-item {
+        padding: 5%;
+        border-radius: 5%;
+        background: rgba(128, 128, 122, 0.7);
+
+        img {
+          width: 100%;
+        }
+
+        .id-box {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 0;
+          font-size: 18px;
+        }
       }
     }
   }
-}
+
   .header-nav {
     padding: 0 4%;
     margin: 10px auto;
 
-    .nft-nav-list {
-      display: flex;
-      justify-content: center;
-      height: 50px;
-      width: 100%;
-      text-align: center;
-    
-
-      .nav-item {
-        background: #272727;
-        line-height: 50px;
-        border-radius: 10px;
-        width: 15% !important;
-        white-space: nowrap;
-        min-width: 120px;
-        padding: 0 20px;
-        margin: 0 10px;
-        font-size: 18px;
-        font-family: Roboto-Bold, Roboto;
-        font-weight: bold;
-        color: #FFFFFF;
-        cursor: pointer;
-
-        &.active {
-          background: linear-gradient(229deg, #DAB163 0%, #CC8A35 100%);
-          color: #1A1414;
-        }
-      }
-    }
   }
 
   .fun-container {
@@ -63,7 +39,8 @@ export default styled.div`
     box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.2);
     border-radius: 20px 20px 20px 20px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    width: 35%;
+    width: 50%;
+    min-width: 300px;
     margin: 0 auto;
     text-align: center;
 
@@ -71,28 +48,33 @@ export default styled.div`
       margin: 1.6em auto;
       width: 90%;
       position: relative;
-      .message-box{
-        
+
+      .message-box {
+
         width: 100%;
-        padding: 0 20px 10px ;
-        .in-line{
+        padding: 0 20px 10px;
+
+        .in-line {
           line-height: 30px;
           width: 100%;
           font-weight: 600;
           display: flex;
           justify-content: space-between;
           margin: 1em 0;
-          .left{
+
+          .left {
             font-size: 18px;
-    font-family: Roboto-Medium, Roboto;
-    font-weight: 500;
-    color: rgb(138, 128, 128);
+            font-family: Roboto-Medium, Roboto;
+            font-weight: 500;
+            color: rgb(138, 128, 128);
           }
-          .right{
+
+          .right {
             font-size: 18px;
           }
         }
       }
+
       img {
         margin: 0em auto;
         width: 100%;
@@ -101,9 +83,10 @@ export default styled.div`
       .mint-btn {
         margin: 1.5em auto;
         width: 100%;
-        background: linear-gradient(229deg, #DAB163 0%, #CC8A35 100%);
+        background: linear-gradient(320deg, #DD3642 0%, #FFC02C 100%);
         border-radius: 10px 10px 10px 10px;
         height: 50px;
+        cursor: pointer;
 
         p {
           font-size: 18px;
@@ -316,19 +299,20 @@ export default styled.div`
           }
         }
 
-     .message-box .in-line{
-        margin: 0.5em 0;
-         .left {
-    font-size: 15px;
+        .message-box .in-line {
+          margin: 0.5em 0;
+
+          .left {
+            font-size: 15px;
+          }
+
+          .right {
+            font-size: 15px;
+          }
         }
-        .right {
-    font-size: 15px;
-        }
-    }
       }
     }
 
-   
 
     .panel-box {
       .panel-container {
@@ -374,11 +358,13 @@ export default styled.div`
   @media screen and (max-width: 450px) {
     .header-nav {
       padding: 0;
-overflow-x: scroll;
+      overflow-x: scroll;
+
       .nft-nav-list {
         display: flex;
         justify-content: space-between;
-width: 550px;
+        width: 550px;
+
         .nav-item {
           width: 130px !important;
           height: 40px;
@@ -421,15 +407,17 @@ width: 550px;
           }
         }
 
-        .message-box .in-line{
-        margin: 0.5em 0;
-         .left {
-    font-size: 14px;
+        .message-box .in-line {
+          margin: 0.5em 0;
+
+          .left {
+            font-size: 14px;
+          }
+
+          .right {
+            font-size: 14px;
+          }
         }
-        .right {
-    font-size: 14px;
-        }
-    }
       }
     }
 

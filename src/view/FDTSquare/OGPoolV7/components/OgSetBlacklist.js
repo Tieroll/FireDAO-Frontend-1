@@ -12,7 +12,7 @@ import {getContractByName, getContractByContract} from "../../../../api/connectC
 import {dealMethod, dealPayMethod, viewMethod} from "../../../../utils/contractUtil"
 import develop from "../../../../env";
 import AddThreeWhiteListStyle from "./OgAdminLevelStyle";
-import {getBlackUsers} from "../../../../graph/donate";
+import {getBlackUsers} from "../../../../graph/donateV7";
 
 const AddThreeWhiteList = ({allRecords}) => {
     let {state, dispatch} = useConnect();
@@ -56,6 +56,7 @@ const AddThreeWhiteList = ({allRecords}) => {
     const getBlackList = async () => {
         try {
             const res = await getBlackUsers()
+            console.log(res)
             if (res && res.data) {
                 const arr = res.data.blackUsers
                 let tempArr = []
@@ -84,7 +85,7 @@ const AddThreeWhiteList = ({allRecords}) => {
         }, 3000)
     }
     const getMaxThree = async () => {
-        let res = await handleViewMethod("maxTwo", [])
+        let res = await handleViewMethod("maxLevels", [2])
         setMaxThree(res.toString())
     }
 
@@ -144,32 +145,13 @@ const AddThreeWhiteList = ({allRecords}) => {
                                     </Form.Item>
                                 )
                             })}
-                            {/*<div className="icon-box">*/}
-                            {/*    <svg onClick={() => {*/}
-                            {/*        addOneWhite()*/}
-                            {/*    }} t="1679715594436" className="icon" viewBox="0 0 1024 1024" version="1.1"*/}
-                            {/*         xmlns="http://www.w3.org/2000/svg" p-id="2724" width="30" height="30">*/}
-                            {/*        <path*/}
-                            {/*            d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m0-896C299.968 128 128 299.968 128 512s171.968 384 384 384 384-171.968 384-384S724.032 128 512 128z m192 448h-128v128c0 35.392-28.608 64-64 64a64 64 0 0 1-64-64v-128h-128a64 64 0 1 1 0-128h128v-128a64.021333 64.021333 0 0 1 128 0v128h128a64 64 0 0 1 64 64c0 35.392-28.608 64-64 64z"*/}
-                            {/*            fill="#ffffff" p-id="2725"></path>*/}
-                            {/*    </svg>*/}
-                            {/*    <svg onClick={() => {*/}
-                            {/*        removeOneWhite()*/}
-                            {/*    }} t="1679716770324" className="icon" viewBox="0 0 1024 1024" version="1.1"*/}
-                            {/*         xmlns="http://www.w3.org/2000/svg" p-id="3771" width="30" height="30">*/}
-                            {/*        <path*/}
-                            {/*            d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m0-896C299.968 128 128 299.968 128 512s171.968 384 384 384 384-171.968 384-384S724.032 128 512 128z m192 448H320a64 64 0 1 1 0-128h384a64 64 0 0 1 64 64c0 35.392-28.608 64-64 64z"*/}
-                            {/*            fill="#ffffff" p-id="3772"></path>*/}
-                            {/*    </svg>*/}
-                            {/*</div>*/}
+
                         </Form>
                         <div className="btns">
                             <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetBlackList()
                             }}>Submit</Button>
-                            {/*<Button className="add-btn" type="primary" onClick={() => {*/}
-                            {/*    removeWhiteList()*/}
-                            {/*}}>Remove</Button>*/}
+
                         </div>
                         <div className="fire-list-box admin3-list">
                             <div className="list-header3 list-header">
@@ -195,7 +177,7 @@ const AddThreeWhiteList = ({allRecords}) => {
                                         </div>
 
                                         <div className="col address">
-                                            {item}
+                                            {state.isMobile?formatAddress(item):item}
                                         </div>
 
                                         <div className="col">

@@ -272,5 +272,70 @@ const AntdOverride = createGlobalStyle`
       }
     }
   }
+  .ant-modal-body {
+
+    .up-list-box {
+      margin: 1em 0;
+      border-radius: 20px 20px 20px 20px;
+
+      .up-header {
+        display: flex;
+        padding: 10px 1.8em;
+        border-bottom: 1px solid rgba(234, 234, 234, 0.10);
+      }
+
+      .up-item, .up-header {
+        justify-content: flex-start;
+
+        .col {
+          text-align: left;
+          font-size: 16px;
+
+          &:nth-child(1) {
+            margin-left: 10px;
+            width: 20%;
+          }
+
+          &:nth-child(2) {
+            width: 70%;
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .up-item:last-child {
+        border-bottom: none;
+      }
+
+      .up-item {
+        padding: 10px 2em;
+        color: #FFFFFF;
+        margin: 0 auto;
+        border-radius: 0px;
+        border-bottom: 1px solid rgba(234, 234, 234, 0.10);;
+        display: flex;
+        .col {
+          overflow: hidden;
+          padding-left: 0%;
+
+        }
+
+        .address {
+          a {
+            color: #CD9E57;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .pagination {
+      text-align: center;
+
+      .ant-pagination {
+        margin: 10px auto;
+      }
+    }
+  }
 `
 export default AntdOverride

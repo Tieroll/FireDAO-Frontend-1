@@ -1,8 +1,9 @@
 import styled from "styled-components";
 export default  styled.div`
   .list-item,.list-header {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+  
   }
   .model-dialog {
     h3 {
@@ -53,6 +54,15 @@ export default  styled.div`
       margin: 1em 0;
     }
   }
+  @media screen and (max-width: 1000px) {
+  .admin3-list{
+    .col{
+      &.address{
+        width: 50%;
+      }
+    }
+  }
+}
 
 `
 

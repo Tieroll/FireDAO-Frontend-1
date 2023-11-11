@@ -132,7 +132,7 @@ const AddThreeWhiteList = ({
         for (let i = 0; i < addWhiteArr.length; i++) {
             arr.push(form2.getFieldValue()["address" + i])
         }
-        console.log(arr,"setAdminLevelSeven")
+        console.log(arr, "setAdminLevelSeven")
         await handleDealMethod("setAdminLevelSeven", [arr])
         getUserSetAdminsLevel()
     }
@@ -258,9 +258,9 @@ const AddThreeWhiteList = ({
                 <div className="panel-box">
                     <div className="panel-container">
                         <h3 className="tip">
-                            I can have <strong>{maxSet}</strong> level {canSetLevel} admin, I've
-                            got <strong>{adminWhiteList.length}</strong> level {canSetLevel} admin, I can
-                            set up <strong>{maxSet - adminWhiteList.length}</strong> level {canSetLevel} admin.
+                            I can have <strong>{maxSet}</strong> level {canSetLevel} , I've
+                            got <strong>{adminWhiteList.length}</strong> level {canSetLevel} , I can
+                            set up <strong>{maxSet - adminWhiteList.length}</strong> level {canSetLevel} .
 
                         </h3>
 
@@ -304,21 +304,21 @@ const AddThreeWhiteList = ({
                         <div className="btns">
                             {isLevel2 && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelThree()
-                            }}>Add Admin Level King</Button>}
+                            }}>Add Level King</Button>}
 
                             {isThreeAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelFour()
-                            }}>Add Admin Level Diamond</Button>}
+                            }}>Add Level Diamond</Button>}
 
                             {isFourAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelFive()
-                            }}>Add Admin Level Gold</Button>}
+                            }}>Add Level Gold</Button>}
                             {isFiveAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelSix()
-                            }}>Add Admin Level Silver</Button>}
+                            }}>Add Level Silver</Button>}
                             {isSixAdmin && <Button className="add-btn" type="primary" onClick={() => {
                                 handleSetAdminLevelSeven()
-                            }}>Add Admin Level Bronze</Button>}
+                            }}>Add Level Bronze</Button>}
 
 
                         </div>
@@ -347,7 +347,7 @@ const AddThreeWhiteList = ({
                                         </div>
 
                                         <div className="col address">
-                                            {item}
+                                            {state.isMobile?formatAddress(item):item}
                                         </div>
 
                                         <div className="col">

@@ -68,7 +68,7 @@ import OGPoolV7Admin from "./view/FDTSquare/OGPoolV7/OGPoolAdmin";
 import OGV7UserAdmin from "./view/FDTSquare/OGPoolV7/OGUserAdmin";
 
 import NFTView from "./view/FDTSquare/OGPoolV7/NFT/NFTView"
-
+import NFTAdmin from "./view/FDTSquare/OGPoolV7/NFT/NFTAdmin"
 
 import FDTRelease from "./view/FDTSquare/FDTRelease/index";
 import FDTReleaseManage from "./view/FDTSquare/FDTReleaseManage/index";
@@ -199,6 +199,7 @@ function App() {
                                 <Route path="/OGV7UserAdmin" element={<OGV7UserAdmin/>}/>
 
                                 <Route path="/NFTView" element={<NFTView/>}/>
+                                <Route path="/NFTAdmin" element={<NFTAdmin/>}/>
 
                                 <Route path="/FDTRelease" element={<FDTRelease/>}/>
                                 <Route path="/FDTReleaseManage" element={<FDTReleaseManage/>}/>

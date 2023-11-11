@@ -34,7 +34,7 @@ export function showNum(val, decimals) {
     if (!val) {
         return 0
     }
-    if (val == NaN) {
+    if (BigNumber(val).isNaN()) {
         return 0
     }
     if (!decimals && decimals != 0) {

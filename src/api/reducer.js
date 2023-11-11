@@ -28,6 +28,8 @@ const reducer = (state, action) => {
             return {...state, userInfo: action.payload};
         case "SET_PidArr":
             return {...state, PidArr: action.payload};
+        case "SET_ISMOBILE":
+            return {...state, isMobile: action.payload};
     }
 }
 export default reducer

@@ -9,8 +9,15 @@ import {formatAddress} from "../../../utils/publicJs";
 import ConnectWallet from "../../../component/ConnectWallet/ConnectWallet";
 import user3 from "../../../imgs/user3.png"
 import download from "../../../imgs/download.png"
-import {zeroAddress} from "viem";
-import {ETHPriceDecimals, MaxUint256} from "../../../config/constants";
+import { MaxUint256} from "../../../config/constants";
+import NFT1 from "../../../imgs/rainbownft1.jpg"
+import NFT2 from "../../../imgs/rainbownft2.jpg"
+import NFT3 from "../../../imgs/rainbownft3.jpg"
+import NFT4 from "../../../imgs/rainbownft4.jpg"
+import NFT5 from "../../../imgs/rainbownft5.jpg"
+import NFT6 from "../../../imgs/rainbownft6.jpg"
+import NFT7 from "../../../imgs/rainbownft7.jpg"
+
 import FLMIcon from "../../../imgs/FLMIcon.png"
 import {
     Button,
@@ -41,6 +48,7 @@ import {dealTime} from "../../../utils/timeUtil";
 import coinInfo from "../../../config/coinInfo";
 import addressMap from "../../../api/addressMap";
 
+const NFTIMGMap = [NFT1,NFT2,NFT3,NFT4,NFT5,NFT6,NFT7]
 const OGPoolPublic = (props) => {
     let {state, dispatch} = useConnect();
     const [activeNav, setActiveNav] = useState(1)
@@ -85,7 +93,8 @@ const OGPoolPublic = (props) => {
     const [myTeamRecord, setMyTeamRecord] = useState([])
     const [inviteRateArr, setInvArr] = useState([])
     const [inviteRecordArr, setInvRecord] = useState([])
-
+    const [nftMap, setNFTMap] = useState([])
+    const [nftRecIndex, setRecNftIndex] = useState(undefined)
 
     const [myStatus, setMyStatus] = useState({})
     const [activeArr, setActiveArr] = useState([])
@@ -229,6 +238,13 @@ const OGPoolPublic = (props) => {
             let nftType= await handleViewMethod("ValueToNft", [(BigNumber(value).multipliedBy(10 ** USDTDecimals)).toFixed(0)])
             setNFTType(nftType)
 
+            setRecNftIndex(undefined)
+            nftMap.forEach((val,index)=>{
+                if(value >= val){
+                    setRecNftIndex(index)
+                }
+            })
+
         }
     }
 
@@ -268,7 +284,7 @@ const OGPoolPublic = (props) => {
 
     const getIsAdmin = async () => {
         const isS = await handleViewMethod("checkAddrForAdminLevelTwo", [state.account])
-        console.log(isS)
+
         const isT = await handleViewMethod("checkAddrForAdminLevelThree", [state.account])
         const isF = await handleViewMethod("checkAddrForAdminLevelFour", [state.account])
         const isFive = await handleViewMethod("checkAddrForAdminLevelFive", [state.account])
@@ -282,6 +298,14 @@ const OGPoolPublic = (props) => {
 
         setIsSixAdmin(isSix)
         setIsSevenAdmin(isSeven)
+    }
+    const getValidNumbers= async () => {
+        let tempArr = []
+        for(let i=0;i< 7;i++){
+            let res = await handleViewMethod("validNumbers", [i])
+            tempArr.push(BigNumber(res).div(10**USDTDecimals).toFixed(0))
+        }
+        setNFTMap(tempArr)
     }
     const getSalePrice = async () => {
         let res = await handleViewMethod("salePrice", [])
@@ -333,7 +357,7 @@ const OGPoolPublic = (props) => {
 
             getAllowanceUSDT()
             await getAddressRecommender(state.account)
-
+            getValidNumbers()
 
         } catch (e) {
 
@@ -376,7 +400,6 @@ const OGPoolPublic = (props) => {
     }
     const getRefArr = async (address, myTeamArr, level) => {
         let refRes = await getAllRegisters(address)
-        console.log(refRes)
         if (refRes.data && refRes.data.allRegisters && refRes.data.allRegisters.length > 0) {
             const refArr = refRes.data.allRegisters
             if (refArr[0]._user != address) {
@@ -485,16 +508,16 @@ const OGPoolPublic = (props) => {
                         if(!rate){
                             rate = 0
                         }
-                        item.usdtAmount = record.usdtAmount
-                        item.flmIncome  = record.flmIncome
-                        item.usdtIncome = BigNumber(record.usdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** USDTDecimals).toString()
-                        item.flmIncome = BigNumber(record.fdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** FLMDecimals).toString()
-                        totalUSDT = BigNumber(totalUSDT).plus(item.usdtIncome)
-                        totalFLM = BigNumber(totalFLM).plus(item.flmIncome)
-                        if (item.level) {
-                            record.level = item.level
-                            record.rate = rate
-                            myTeamRecord.push(record)
+                        const obj = {...record,...item}
+
+                        obj.usdtIncome = BigNumber(record.usdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** USDTDecimals).toString()
+                        obj.flmIncome = BigNumber(record.fdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** FLMDecimals).toString()
+                        totalUSDT = BigNumber(totalUSDT).plus(obj.usdtIncome)
+                        totalFLM = BigNumber(totalFLM).plus(obj.flmIncome)
+                        console.log(obj)
+                        if (obj.level) {
+                            obj.rate = rate
+                            myTeamRecord.push(obj)
                         }
                     }
                 })
@@ -577,32 +600,32 @@ const OGPoolPublic = (props) => {
     }
     const coinOptions = [
         {
-            label: "100USDT",
+            label: "100",
             value: '100',
         },
         {
-            label: "300USDT",
+            label: "300",
             value: '300',
         },
 
         {
-            label: "500USDT",
+            label: "500",
             value: '500',
         },
         {
-            label: "1000USDT",
+            label: "1000",
             value: '1000',
         },
         {
-            label: "2000USDT",
+            label: "2000",
             value: '2000',
         },
         {
-            label: "3000USDT",
+            label: "3000",
             value: '3000',
         },
         {
-            label: "5000USDT",
+            label: "5000",
             value: '5000',
         },
     ];
@@ -697,7 +720,7 @@ const OGPoolPublic = (props) => {
                         }}>
                             {isSecondAdmin ? "Lv2" : ""}{isThreeAdmin ? "Level King" : ""}{isFourAdmin ? "Level Diamond" : ""}{isFiveAdmin ? "Level Gold" : ""}
                             {isSixAdmin ? "Level Silver" : ""}
-                            {isSevenAdmin ? "Level Bronze" : ""}Admin
+                            {isSevenAdmin ? "Level Bronze" : ""}
                         </div>
 
                     }
@@ -865,10 +888,8 @@ const OGPoolPublic = (props) => {
                                             validateFirst={true}
 
                                         >
-                                            <div className="input-box">
-                                                <div className="">
-                                                    {nftType}
-                                                </div>
+                                            <div className="input-box" style={{display:"flex",justifyContent:"center"}}>
+                                                <img   className="recImg" style={{width:"80%",borderRadius:"10px",marginTop:"10px"}} src={NFTIMGMap[nftRecIndex]} alt={nftType}/>
                                             </div>
                                         </Form.Item>
                                     </div>
@@ -1232,19 +1253,22 @@ const OGPoolPublic = (props) => {
                                             <div className="col">
                                                 <img width={20} height={20} style={{marginRight: "3px"}} src={FDTIcon}
                                                      alt=""/>
-                                                {BigNumber(item.flmIncome).toFixed(3)}
+                                                {BigNumber(item.fdtAmount).div(10**FDTDecimals).toFixed(0)}
+                                            </div>
+                                            <div className="col">
+                                                {BigNumber(item.usdtAmount).div(item.fdtAmount).multipliedBy(10**(FDTDecimals-USDTDecimals)).toFixed(3)}
                                             </div>
 
-                                            <div className="col flex-box ">
+                                            <div className="col  ">
                                                 <div className="item flex-box">
                                                     <img width={20} height={20} style={{marginRight: "3px"}}
                                                          src={ethereum} alt=""/>
-                                                    {BigNumber(item.usdtIncome ).multipliedBy(item.rate / 100).toFixed(3)}
+                                                    {BigNumber(item.usdtIncome ).multipliedBy(item.rate / 100).toFixed(0)}
                                                 </div>
-                                                <div className="item flex-box" style={{marginLeft: "10px"}}>
+                                                <div className="item flex-box" style={{marginLeft: "0"}}>
                                                     <img width={20} height={20} style={{marginRight: "3px"}}
                                                          src={FDTIcon} alt=""/>
-                                                    {BigNumber(item.flmIncome ).multipliedBy(item.rate / 100).toFixed(3)}
+                                                    {BigNumber(item.flmIncome ).multipliedBy(item.rate / 100).toFixed(0)}
                                                 </div>
                                             </div>
                                             <div className="col">

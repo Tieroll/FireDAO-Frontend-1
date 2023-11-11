@@ -15,7 +15,7 @@ import {dealMethod, dealPayMethod, viewMethod} from "../../../utils/contractUtil
 import develop from "../../../env";
 import {useNavigate} from "react-router-dom";
 import judgeStatus from "../../../utils/judgeStatus";
-import {getDonateRecord, getAllRegisters} from "../../../graph/donateV9";
+import {getDonateRecord, getAllRegisters, getAllFlmRate, getBlackUsers} from "../../../graph/donateV7";
 import OGUserAdminStyle from "./OGUserAdminStyle";
 import OgSetActive from "./components/OgSetActive";
 import OgSetBlacklist from "./components/OgSetBlacklist";
@@ -39,13 +39,18 @@ const OGPoolPublic = (props) => {
     const [isSevenAdmin, setIsSevenAdmin] = useState(true)
 
     const [teamRecordArr, setTeamRecordArr] = useState([])
-    const [totalUSDT, settotalUSDT] = useState(0)
+    const [totalUSDT, setTotalUSDT] = useState(0)
     const [totalFLM, setTotalFlm] = useState(0)
 
     const [total, setTotal] = useState(0)
     const [allRecords, setAllRecords] = useState([])
     const [curPage, setCurPage] = useState(1)
     const [pageCount, setPageCount] = useState(20)
+
+    const [flmRateRecordArr, setFlmRateRecord] = useState([])
+    const [rateRecordArr, setRateRecord] = useState([])
+    const [flmRateForAdminsRecord, setFlmRateForAdminsRecord] = useState([])
+    const [teamAddrRecord, setTeamAddrRecord] = useState([])
 
 
     const history = useNavigate();
@@ -109,24 +114,7 @@ const OGPoolPublic = (props) => {
 
 
     }
-    const getMyLevel = () => {
-        if (isSecondAdmin) {
-            return 2
-        }
-        if (isThreeAdmin) {
-            return 3
-        }
-        if (isFourAdmin) {
-            return 4
-        }
-        if (isFiveAdmin) {
-            return 5
-        }
-        if (isSixAdmin) {
-            return 6
-        }
 
-    }
 
     const getData = async () => {
         try {
@@ -135,14 +123,97 @@ const OGPoolPublic = (props) => {
                 return
             }
             getIsAdmin()
+            getInviteRecord()
         } catch (e) {
             console.log(e)
         }
     }
+
+
+
+    const getInviteRecord = async () => {
+        const res2 = await getAllFlmRate()
+        if (res2 && res2.data) {
+            setFlmRateRecord(res2.data.allFlmRates)
+            setRateRecord(res2.data.allTeamRates)
+            setFlmRateForAdminsRecord(res2.data.allFlmRateForAdmins)
+            setTeamAddrRecord(res2.data.allTeamAddrs)
+        }
+    }
+
+    const getLevelInviteRate = async (address, recordTime) => {
+        for (let i = 0; i < rateRecordArr.length; i++) {
+            const item = rateRecordArr[i]
+            const flmItem = flmRateForAdminsRecord[i]
+            const addrItem = teamAddrRecord[i]
+            if ((item.addr == address) && (item.blockTimestamp == recordTime)) {
+                if (addrItem.admin0.toString().toLowerCase() == state.account.toString().toLowerCase()) {
+                    return {
+                        adminRate: item.adminRate0,
+                        adminFlmRate: flmItem.adminFlmRate6,
+                    }
+                }
+                if (addrItem.admin1.toLowerCase() == state.account.toLowerCase()) {
+                    return {
+                        adminRate: item.adminRate1,
+                        adminFlmRate: flmItem.adminFlmRate5,
+                    }
+                }
+                if (addrItem.admin2.toLowerCase() == state.account.toLowerCase()) {
+                    return {
+                        adminRate: item.adminRate2,
+                        adminFlmRate: flmItem.adminFlmRate4,
+                    }
+                }
+                if (addrItem.admin3.toLowerCase() == state.account.toLowerCase()) {
+                    return {
+                        adminRate: item.adminRate3,
+                        adminFlmRate: flmItem.adminFlmRate3,
+                    }
+                }
+                if (addrItem.admin4.toLowerCase() == state.account.toLowerCase()) {
+
+                    return {
+                        adminRate: item.adminRate4,
+                        adminFlmRate: flmItem.adminFlmRate2,
+                    }
+                }
+                if (addrItem.admin5.toLowerCase() == state.account.toLowerCase()) {
+
+                    return {
+                        adminRate: item.adminRate5,
+                        adminFlmRate: flmItem.adminFlmRate1,
+                    }
+                }
+                if (addrItem.admin6.toLowerCase() == state.account.toLowerCase()) {
+
+                    return {
+                        adminRate: item.adminRate6,
+                        adminFlmRate: flmItem.adminFlmRate0,
+                    }
+                }
+            }
+        }
+        return 0
+
+    }
     const getRefArr = async (address, myTeamArr, level) => {
         let refRes = await getAllRegisters(address)
         if (refRes.data && refRes.data.allRegisters && refRes.data.allRegisters.length > 0) {
-            const refArr = refRes.data.allRegisters
+            let refArr = refRes.data.allRegisters
+            const realRefArr = []
+            refArr.forEach(item => {
+                let hasAddress = false;
+                realRefArr.forEach(refItem => {
+                    if (refItem._user == item._user) {
+                        hasAddress = true
+                    }
+                })
+                if (!hasAddress) {
+                    realRefArr.push(item)
+                }
+            })
+            refArr = realRefArr
             if (refArr[0]._user != address) {
                 refArr.forEach(item => {
                     item.level = level
@@ -160,43 +231,86 @@ const OGPoolPublic = (props) => {
 
     }
 
-    function getLevelRate(level) {
-        switch (level) {
-            case 1:
-                return 8;
-            case 2:
-                return 5;
-            case 3:
-                return 3;
-            case 4:
-                return 2;
-            case 5:
-                return 2;
-        }
-        return 0
-    }
-
     const getRecord = async () => {
         try {
             let res = await getDonateRecord()
+            // get blacklist
+            const blackUserRes = await getBlackUsers()
+            let timeStamp = undefined, timeStampArr = []
+            if (blackUserRes && blackUserRes.data) {
+                const arr = blackUserRes.data.blackUsers
+                // get is in black
+
+                // get timeStampArr
+                arr.forEach(item => {
+                    if (item.user == state.account) {
+                        timeStampArr.push(item.blockTimestamp)
+                    }
+                })
+                // get timeStamp
+                if (timeStampArr.length % 2 == 1) {
+                    for (let i = 0; i < timeStampArr.length; i++) {
+                        const item = timeStampArr[i]
+                        if (item.user == state.account) {
+                            timeStamp = item.blockTimestamp
+                            break;
+                        }
+                    }
+                    timeStampArr.pop()
+                }
+
+
+            }
+
 
             if (res.data && res.data.allRecords) {
                 const recordArr = res.data.allRecords
                 const refArr = await getRefArr(state.account, [], 1)
+                if(!refArr){
+                    return
+                }
                 let teamRecordArr = [], totalUSDT = 0, totalFLM = 0
-                refArr.forEach(refItem => {
+                for (let i = 0; i < refArr.length; i++) {
+                    const refItem = refArr[i]
                     for (let j = 0; j < recordArr.length; j++) {
                         const recordItem = recordArr[j]
                         if (recordItem.addr.toLowerCase() == refItem._user.toLowerCase()) {
+
+                            if (timeStamp && BigNumber(timeStamp).lt(recordItem.blockTimestamp)) {
+                                continue
+                            }
+                            if (timeStampArr.length > 0) {
+                                let isInBlackTime = false
+                                timeStampArr.forEach((timeItem, index) => {
+                                    if (index % 2 == 1) {
+                                        if (BigNumber(timeStamp).lt(timeItem) && BigNumber(timeStamp).gt(timeStampArr[index - 1])) {
+                                            isInBlackTime = true
+                                        }
+                                    }
+                                })
+                                if(isInBlackTime){
+                                    continue
+                                }
+                            }
                             recordItem.level = refItem.level
-                            recordItem.rate = getLevelRate(getMyLevel())
+                            recordItem.rate = (await getLevelInviteRate(refItem._user, recordItem.blockTimestamp)).adminRate / 100
+                            recordItem.flmRate = (await getLevelInviteRate(refItem._user, recordItem.blockTimestamp)).adminFlmRate/ 100
+
+                            if (!recordItem.rate) {
+                                recordItem.rate = 0
+                            }
+                            if (!recordItem.flmRate) {
+                                recordItem.flmRate = 0
+                            }
                             teamRecordArr.push(recordItem)
-                            totalUSDT = BigNumber(totalUSDT).plus(recordItem.usdtAmount / 10 ** USDTDecimals) * getLevelRate(getMyLevel()) / 100
-                            totalFLM = BigNumber(totalFLM).plus(recordItem.flmAmount / 10 ** FLMDecimals) * getLevelRate(getMyLevel()) / 100
+
+                            totalUSDT = BigNumber(totalUSDT).plus(recordItem.usdtAmount / 10 ** USDTDecimals * recordItem.rate / 100)
+                            totalFLM = BigNumber(totalFLM).plus(recordItem.fdtAmount / 10 ** FLMDecimals * recordItem.flmRate / 100)
                         }
                     }
-                })
-                settotalUSDT(totalUSDT.toString())
+                }
+                console.log(teamRecordArr)
+                setTotalUSDT(totalUSDT.toString())
                 setTotalFlm(totalFLM.toString())
                 setTeamRecordArr(teamRecordArr)
             }
@@ -207,16 +321,19 @@ const OGPoolPublic = (props) => {
         }
     }
 
-
     useEffect(() => {
         setActiveNav()
         getData()
         getRecord()
 
     }, [state.account]);
-    useEffect(() => {
+    useEffect(async () => {
+        if (flmRateRecordArr.length > 0 && flmRateRecordArr.length == rateRecordArr.length) {
+            getRecord()
 
-    }, [state.account, state.networkId, state.apiState])
+        }
+
+    }, [rateRecordArr, flmRateRecordArr]);
 
     return (
         <OGUserAdminStyle>
@@ -341,29 +458,30 @@ const OGPoolPublic = (props) => {
                                     <div className="col">
                                         <img width={20} height={20} style={{marginRight: "3px"}} src={ethereum}
                                              alt=""/>
-                                        {showNum(item.usdtAmount / 10 ** USDTDecimals, 3)}
+                                        {BigNumber(item.usdtAmount).dividedBy(10 ** USDTDecimals).toFixed(1)}
                                     </div>
                                     <div className="col">
                                         <img width={20} height={20} style={{marginRight: "3px"}} src={FDTIcon}
                                              alt=""/>
-                                        {showNum(item.fdtAmount / 10 ** FDTDecimals, 1)}
+                                        {BigNumber(item.fdtAmount).dividedBy(10 ** FDTDecimals).toFixed(0)}
                                     </div>
                                     <div className="col price">
                                         <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
                                              alt=""/>
-                                        {showNum(0.01)}
+                                        {BigNumber(item.usdtAmount).div(item.fdtAmount).multipliedBy(10**(FDTDecimals-USDTDecimals)).toFixed(3)}
+
                                     </div>
                                
                                     <div className="col ">
                                         <div className="item">
                                             <img width={20} height={20} style={{marginRight: "3px"}}
                                                  src={ethereum} alt=""/>
-                                            {showNum(BigNumber(item.usdtAmount / 10 ** USDTDecimals).multipliedBy(item.rate / 100), 3)}
+                                            {(BigNumber(item.usdtAmount / 10 ** USDTDecimals).multipliedBy(item.rate / 100).toFixed(0))}
                                         </div>
-                                        <div className="item" style={{marginLeft: "10px"}}>
+                                        <div className="item" style={{marginLeft: "0"}}>
                                             <img width={20} height={20} style={{marginRight: "3px"}}
                                                  src={FDTIcon} alt=""/>
-                                            {showNum(BigNumber(item.fdtAmount / 10 ** FLMDecimals).multipliedBy(item.rate / 100), 1)}
+                                            {BigNumber(item.fdtAmount / 10 ** FLMDecimals).multipliedBy(item.rate / 100).toFixed(0)}
                                         </div>
                                     </div>
                                     <div className="col">

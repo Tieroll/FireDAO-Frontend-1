@@ -38,7 +38,13 @@ const items = [
     },
 
 ];
-
+function isMobile(){
+    if(window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+        return true;
+    }else{
+        return false;
+    }
+}
 const FireDAOHeader = () => {
     let { state, dispatch } = useConnect();
     const history = useNavigate();
@@ -47,7 +53,9 @@ const FireDAOHeader = () => {
         history(url);
     }
     const location = useLocation()
-
+    useEffect(()=>{
+        dispatch({type: "SET_ISMOBILE", payload: isMobile()})
+    },[])
     const handleSoulViewMethod = async (name, params) => {
         let contractTemp = await getContractByName("mintFireSoul", state.api,)
         if (!contractTemp) {

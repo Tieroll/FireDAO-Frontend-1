@@ -166,6 +166,11 @@ export default styled.div`
     overflow: auto;
     .list-header{
       padding-left: 50px;
+      width: 1200px;
+      
+    }
+    .list-item{
+      width: 1200px;
     }
     .col {
       text-align: center;
@@ -188,6 +193,7 @@ export default styled.div`
     a {
       color: rgba(205, 158, 87, 1);
       text-align: center;
+      font-size: 12px;
     }
 
     padding: 0 5px;
@@ -239,11 +245,11 @@ export default styled.div`
   .header-nav {
     padding: 10px 11.7%;
     display: flex;
-
+    overflow: auto;
     .fire-nav-list {
       height: 45px;
       width: auto;
-
+      white-space: nowrap;
       .nav-item {
         width: auto;
         padding: 0 20px;

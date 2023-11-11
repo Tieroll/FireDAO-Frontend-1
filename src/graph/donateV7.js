@@ -46,17 +46,69 @@ export function getAllInvites() {
         `
     }, "")
 }
-
 export function getBlackUsers() {
     return fetchQueryBase(name, {
         text: ` {
-            blackUsers(first:1000){
+            blackUsers(first:1000, orderBy: blockTimestamp,orderDirection: desc){
                 operator
                 user
+                blockTimestamp
             }
             }`
     }, "")
 }
+export function getAllFlmRate() {
+    return fetchQueryBase(name, {
+        text: `{\t\t\t\t\t
+         allFlmRates(first: 1000){
+                flmRate1
+                flmRate2
+                flmRate3
+                flmRate4
+                flmRate0
+                flmRate5
+                flmRate6
+                blockTimestamp
+                  user
+            }
+  allTeamAddrs(first: 1000){
+                admin0
+    \t\t\t\t\t\tadmin1
+    \t\t\t\t\t\tadmin2
+    \t\t\t\t\t\tadmin3
+    \t\t\t\t\t\tadmin4
+    \t\t\t\t\t\tadmin5
+    \t\t\t\t\t\tadmin6
+                blockTimestamp
+    \t\t\t\t\t\taddr
+            }
+            allFlmRateForAdmins(first: 1000){
+                adminFlmRate1
+                adminFlmRate2
+                adminFlmRate3
+                adminFlmRate4
+                adminFlmRate0
+                adminFlmRate5
+                adminFlmRate6
+                blockTimestamp
+                user
+            }
+            allTeamRates(first: 1000){
+                adminRate1
+                adminRate2
+                adminRate3
+                adminRate4
+                adminRate0
+                adminRate7
+                adminRate6
+                addr
+                blockTimestamp
+            }
+          
+        }`
+    }, "")
+}
+
 
 export function getSecondDonateRecord(addr) {
     return fetchQueryBase(name, {

@@ -58,6 +58,7 @@ const OgPoolAdmin = (props) => {
     const [maxSixAdmin, setMaxSixAdmin] = useState(0)
     const [maxSevenAdmin, setMaxSevenAdmin] = useState(0)
 
+    const [userFlmRewardRate, setUserFlmRewardRate] = useState(0)
 
     const [withdrawCoinAddr, setWithdrawCoinAddr] = useState()
     const [sumArr, setSumArr] = useState([])
@@ -155,7 +156,7 @@ const OgPoolAdmin = (props) => {
     }
     const getTotalDonate = async () => {
         let res = await handleViewMethod("totalDonate", [])
-        setTotalDonate(BigNumber(res).dividedBy(10 ** FDTDecimals).toString())
+        setTotalDonate(BigNumber(res).dividedBy(10 ** USDTDecimals).toString())
     }
     const getSalePrice = async () => {
         let res = await handleViewMethod("salePrice", [])
@@ -170,6 +171,10 @@ const OgPoolAdmin = (props) => {
     const getMaxThreeAdmin = async () => {
         let res = await handleViewMethod("maxLevels", [3])
         setMaxThreeAdmin(res)
+    }
+    const getUserFlmRewardRate= async () => {
+        let res = await handleViewMethod("userFlmRewardRate", [])
+        setUserFlmRewardRate(res)
     }
     const getMaxFourAdmin = async () => {
         let res = await handleViewMethod("maxLevels", [4])
@@ -268,7 +273,7 @@ const OgPoolAdmin = (props) => {
             return
         }
         let tempArr = [], totalRate = 0
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 7; i++) {
             const inviteRate = await handleViewMethod("flmRate", [i])
             tempArr.push({index: i + 1, inviteRate: inviteRate.toString()})
             totalRate = BigNumber(totalRate).plus(inviteRate)
@@ -401,7 +406,10 @@ const OgPoolAdmin = (props) => {
         await handleDealMethod("transferOwnership", [form.getFieldValue().address])
         getOwner()
     }
-
+    const setUserFlmRewards = async () => {
+        await handleDealMethod("setUserFlmRewards", [form.getFieldValue().UserFlmRewardRate])
+        getUserFlmRewardRate()
+    }
     const handlePause = async () => {
         await handleDealMethod("pause", [])
         getPause()
@@ -591,15 +599,13 @@ const OgPoolAdmin = (props) => {
                     </a>
                 )}
             </div>
-            <div className="col ">
-                {item.ethAmount / 10 ** ETHDecimals}
-            </div>
             <div className="col">
-                {BigNumber(item.usdtAmount / 10 ** USDTDecimals).toFixed(2)}
+                {BigNumber(item.usdtAmount).dividedBy(10 ** USDTDecimals).toFixed(2)}
             </div>
 
+
             <div className="col ">
-                {BigNumber(item.fdtAmount / 10 ** FDTDecimals).toFixed(2)}
+                {BigNumber(item.fdtAmount).dividedBy(10 ** FDTDecimals).toFixed(2)}
             </div>
             <div className="col">
                 {dealTime(item.blockTimestamp)}
@@ -863,11 +869,25 @@ const OgPoolAdmin = (props) => {
                                 <Button type="primary" onClick={setFlmAddress}>Submit</Button>
                             </Form>
                         </div>
-
+                        <div className="panel-container">
+                            <div className="panel-title">
+                                Set Reward FLM Rate: {userFlmRewardRate}
+                            </div>
+                            <Form form={form} name="control-hooks" className="form">
+                                <Form.Item
+                                    name="UserFlmRewardRate"
+                                    label="User FlmReward Rate"
+                                >
+                                    <div className="input-box">
+                                        <Input/>
+                                    </div>
+                                </Form.Item>
+                                <Button type="primary" onClick={setUserFlmRewards}>Submit</Button>
+                            </Form>
+                        </div>
                         <div className="panel-container">
                             <div className="panel-title">
                                 setFSC
-                                {/*    {FireSeedCoupon}*/}
                             </div>
                             <Form form={form} name="control-hooks" className="form">
                                 <Form.Item
@@ -1330,10 +1350,7 @@ const OgPoolAdmin = (props) => {
                                             Wallet Address
                                         </div>
                                         <div className="col">
-                                            ETH
-                                        </div>
-                                        <div className="col">
-                                            Value
+                                            USDT
                                         </div>
 
 
