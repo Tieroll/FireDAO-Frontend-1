@@ -85,6 +85,7 @@ const NFTAdmin = (props) => {
     const transferOwnership = async () => {
         let contractTemp = await getContractByContract("rainbowNFT", nftAddrArr[curLevel], state.api,)
         await dealMethod(contractTemp, state.account, "transferOwnership", [form.getFieldValue().address])
+        getAdmin()
     }
     const getAdmin = async () => {
 

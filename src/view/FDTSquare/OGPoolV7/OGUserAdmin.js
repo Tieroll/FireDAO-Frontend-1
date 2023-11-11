@@ -150,19 +150,19 @@ const OGPoolPublic = (props) => {
                 if (addrItem.admin0.toString().toLowerCase() == state.account.toString().toLowerCase()) {
                     return {
                         adminRate: item.adminRate0,
-                        adminFlmRate: flmItem.adminFlmRate6,
+                        adminFlmRate: flmItem.adminFlmRate0,
                     }
                 }
                 if (addrItem.admin1.toLowerCase() == state.account.toLowerCase()) {
                     return {
                         adminRate: item.adminRate1,
-                        adminFlmRate: flmItem.adminFlmRate5,
+                        adminFlmRate: flmItem.adminFlmRate1,
                     }
                 }
                 if (addrItem.admin2.toLowerCase() == state.account.toLowerCase()) {
                     return {
                         adminRate: item.adminRate2,
-                        adminFlmRate: flmItem.adminFlmRate4,
+                        adminFlmRate: flmItem.adminFlmRate2,
                     }
                 }
                 if (addrItem.admin3.toLowerCase() == state.account.toLowerCase()) {
@@ -175,21 +175,21 @@ const OGPoolPublic = (props) => {
 
                     return {
                         adminRate: item.adminRate4,
-                        adminFlmRate: flmItem.adminFlmRate2,
+                        adminFlmRate: flmItem.adminFlmRate4,
                     }
                 }
                 if (addrItem.admin5.toLowerCase() == state.account.toLowerCase()) {
 
                     return {
                         adminRate: item.adminRate5,
-                        adminFlmRate: flmItem.adminFlmRate1,
+                        adminFlmRate: flmItem.adminFlmRate5,
                     }
                 }
                 if (addrItem.admin6.toLowerCase() == state.account.toLowerCase()) {
 
                     return {
                         adminRate: item.adminRate6,
-                        adminFlmRate: flmItem.adminFlmRate0,
+                        adminFlmRate: flmItem.adminFlmRate6,
                     }
                 }
             }

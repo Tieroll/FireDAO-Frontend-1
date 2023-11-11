@@ -1,6 +1,6 @@
 import {fetchQueryBase} from "./index";
 
-const name = "patton-sr/ogfdt"
+const name = "patton-sr/ogtest"
 
 export function getDonateRecord() {
     return fetchQueryBase(name, {

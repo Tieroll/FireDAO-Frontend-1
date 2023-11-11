@@ -708,31 +708,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "flmRate6",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "flmRate5",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "flmRate4",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "flmRate3",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "flmRate2",
+				"name": "flmRate0",
 				"type": "uint256"
 			},
 			{
@@ -744,7 +720,31 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "flmRate0",
+				"name": "flmRate2",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "flmRate3",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "flmRate4",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "flmRate5",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "flmRate6",
 				"type": "uint256"
 			},
 			{
@@ -763,31 +763,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "adminFlmRate6",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "adminFlmRate5",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "adminFlmRate4",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "adminFlmRate3",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "adminFlmRate2",
+				"name": "adminFlmRate0",
 				"type": "uint256"
 			},
 			{
@@ -799,7 +775,31 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "adminFlmRate0",
+				"name": "adminFlmRate2",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "adminFlmRate3",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "adminFlmRate4",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "adminFlmRate5",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "adminFlmRate6",
 				"type": "uint256"
 			},
 			{
@@ -815,6 +815,12 @@
 	{
 		"anonymous": false,
 		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "recommender0",
+				"type": "address"
+			},
 			{
 				"indexed": false,
 				"internalType": "address",
@@ -854,12 +860,6 @@
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "recommender7",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
 				"name": "addr",
 				"type": "address"
 			}
@@ -870,6 +870,12 @@
 	{
 		"anonymous": false,
 		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "rate0",
+				"type": "uint256"
+			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
@@ -904,12 +910,6 @@
 				"indexed": false,
 				"internalType": "uint256",
 				"name": "rate6",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "rate7",
 				"type": "uint256"
 			},
 			{
@@ -1093,13 +1093,13 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "adminRate6",
+				"name": "adminRate5",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "adminRate7",
+				"name": "adminRate6",
 				"type": "uint256"
 			},
 			{
