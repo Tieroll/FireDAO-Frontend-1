@@ -1,7 +1,9 @@
 import {fetchQueryBase} from "./index";
 
-const name = "patton-sr/ogtest"
-
+let name = "patton-sr/ogtest"
+if(process.env.NODE_ENV === "development"){
+    name = "patton-sr/ogtest1"
+}
 export function getDonateRecord() {
     return fetchQueryBase(name, {
         text: `{
@@ -27,7 +29,7 @@ export function getAllInvites() {
                 recommender4
                 recommender5
                 recommender6
-                recommender7
+                recommender0
                 addr
                 blockTimestamp
         }
@@ -38,7 +40,7 @@ export function getAllInvites() {
                 rate4
                 rate5
                 rate6
-                rate7
+                rate0
                 addr
                 blockTimestamp
             }
@@ -99,7 +101,7 @@ export function getAllFlmRate() {
                 adminRate3
                 adminRate4
                 adminRate0
-                adminRate7
+                adminRate5
                 adminRate6
                 addr
                 blockTimestamp

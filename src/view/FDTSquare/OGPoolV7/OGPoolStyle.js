@@ -198,6 +198,7 @@ export default styled.div`
     a {
       color: rgba(205, 158, 87, 1);
       text-align: center;
+      font-size: 12px;
     }
     color: rgba(205, 158, 87, 1);
     padding: 0 5px;

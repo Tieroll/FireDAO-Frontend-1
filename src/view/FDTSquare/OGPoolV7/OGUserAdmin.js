@@ -20,7 +20,6 @@ import OGUserAdminStyle from "./OGUserAdminStyle";
 import OgSetActive from "./components/OgSetActive";
 import OgSetBlacklist from "./components/OgSetBlacklist";
 import FDTIcon from "../../../imgs/fdt.png";
-import ethereum from "../../../imgs/ethereum.png";
 import {ETHDecimals, FDTDecimals, FLMDecimals, USDTDecimals} from "../../../config/constants";
 import {showNum} from "../../../utils/bigNumberUtil";
 import {dealTime} from "../../../utils/timeUtil";
@@ -149,24 +148,28 @@ const OGPoolPublic = (props) => {
             if ((item.addr == address) && (item.blockTimestamp == recordTime)) {
                 if (addrItem.admin0.toString().toLowerCase() == state.account.toString().toLowerCase()) {
                     return {
+                        level:1,
                         adminRate: item.adminRate0,
                         adminFlmRate: flmItem.adminFlmRate0,
                     }
                 }
                 if (addrItem.admin1.toLowerCase() == state.account.toLowerCase()) {
                     return {
+                        level:2,
                         adminRate: item.adminRate1,
                         adminFlmRate: flmItem.adminFlmRate1,
                     }
                 }
                 if (addrItem.admin2.toLowerCase() == state.account.toLowerCase()) {
                     return {
+                        level:3,
                         adminRate: item.adminRate2,
                         adminFlmRate: flmItem.adminFlmRate2,
                     }
                 }
                 if (addrItem.admin3.toLowerCase() == state.account.toLowerCase()) {
                     return {
+                        level:4,
                         adminRate: item.adminRate3,
                         adminFlmRate: flmItem.adminFlmRate3,
                     }
@@ -174,6 +177,7 @@ const OGPoolPublic = (props) => {
                 if (addrItem.admin4.toLowerCase() == state.account.toLowerCase()) {
 
                     return {
+                        level:5,
                         adminRate: item.adminRate4,
                         adminFlmRate: flmItem.adminFlmRate4,
                     }
@@ -181,13 +185,14 @@ const OGPoolPublic = (props) => {
                 if (addrItem.admin5.toLowerCase() == state.account.toLowerCase()) {
 
                     return {
+                        level:6,
                         adminRate: item.adminRate5,
                         adminFlmRate: flmItem.adminFlmRate5,
                     }
                 }
                 if (addrItem.admin6.toLowerCase() == state.account.toLowerCase()) {
-
                     return {
+                        level:7,
                         adminRate: item.adminRate6,
                         adminFlmRate: flmItem.adminFlmRate6,
                     }
@@ -292,7 +297,7 @@ const OGPoolPublic = (props) => {
                                     continue
                                 }
                             }
-                            recordItem.level = refItem.level
+                            recordItem.level = (await getLevelInviteRate(refItem._user, recordItem.blockTimestamp)).level
                             recordItem.rate = (await getLevelInviteRate(refItem._user, recordItem.blockTimestamp)).adminRate / 100
                             recordItem.flmRate = (await getLevelInviteRate(refItem._user, recordItem.blockTimestamp)).adminFlmRate/ 100
 
@@ -309,7 +314,6 @@ const OGPoolPublic = (props) => {
                         }
                     }
                 }
-                console.log(teamRecordArr)
                 setTotalUSDT(totalUSDT.toString())
                 setTotalFlm(totalFLM.toString())
                 setTeamRecordArr(teamRecordArr)
@@ -323,6 +327,7 @@ const OGPoolPublic = (props) => {
 
     useEffect(() => {
         setActiveNav()
+        setTeamRecordArr([])
         getData()
         getRecord()
 
@@ -456,7 +461,7 @@ const OGPoolPublic = (props) => {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <img width={20} height={20} style={{marginRight: "3px"}} src={ethereum}
+                                        <img width={20} height={20} style={{marginRight: "3px"}} src={USDTIcon}
                                              alt=""/>
                                         {BigNumber(item.usdtAmount).dividedBy(10 ** USDTDecimals).toFixed(1)}
                                     </div>
@@ -474,11 +479,11 @@ const OGPoolPublic = (props) => {
                                
                                     <div className="col ">
                                         <div className="item">
-                                            <img width={20} height={20} style={{marginRight: "3px"}}
-                                                 src={ethereum} alt=""/>
+                                            <img width={20} height={20} style={{marginRight: "3px",marginLeft:0}}
+                                                 src={USDTIcon} alt=""/>
                                             {(BigNumber(item.usdtAmount / 10 ** USDTDecimals).multipliedBy(item.rate / 100).toFixed(0))}
                                         </div>
-                                        <div className="item" style={{marginLeft: "0"}}>
+                                        <div className="item" style={{marginLeft: "0",marginTop:"3px"}}>
                                             <img width={20} height={20} style={{marginRight: "3px"}}
                                                  src={FDTIcon} alt=""/>
                                             {BigNumber(item.fdtAmount / 10 ** FLMDecimals).multipliedBy(item.rate / 100).toFixed(0)}

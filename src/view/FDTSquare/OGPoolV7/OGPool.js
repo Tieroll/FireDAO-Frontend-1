@@ -224,6 +224,7 @@ const OGPoolPublic = (props) => {
     }
     const getAllowanceUSDT = async () => {
         let res2 = await handleCoinViewMethod("allowance", "USDT", [state.account,addressMap["ogV7"].address])
+
         setAllowance(BigNumber(res2).dividedBy(10 ** USDTDecimals).toString())
     }
     const getTotalDonate = async () => {
@@ -249,7 +250,6 @@ const OGPoolPublic = (props) => {
     }
 
     const exchangeFdt = async () => {
-        console.log((BigNumber(inputValue).multipliedBy(10 ** USDTDecimals)).toFixed(0))
         if (inputValue > 0) {
             await handleDealMethod("donate", [(BigNumber(inputValue).multipliedBy(10 ** USDTDecimals)).toFixed(0)])
             getData()
@@ -271,7 +271,6 @@ const OGPoolPublic = (props) => {
             }
             refAddr = form.getFieldValue().referralCode
         }
-        console.log(refAddr)
         await handleDealMethod("register", [refAddr.toString()])
         await getMyStatus()
         setTimeout(() => {
@@ -384,7 +383,6 @@ const OGPoolPublic = (props) => {
 
     const getAddressRecommender = async (address) => {
         const res = await getRecommender(address)
-        console.log(res)
         if (res && res.data && res.data.allRegisters[0]) {
             setMyRecommender(res.data.allRegisters[0].recommenders)
             setMyId(res.data.allRegisters[0].Contract_id)
@@ -424,27 +422,11 @@ const OGPoolPublic = (props) => {
     const getLevelInviteRate = async (address)=>{
         for(let i=0;i<inviteRecordArr.length;i++){
             const item = inviteRecordArr[i]
-            if(item.addr == address){
-                if(item.recommender1.toString().toLowerCase() == state.account.toString().toLowerCase()){
-                    return item.rate1
-                }
-                if(item.recommender2.toLowerCase() == state.account.toLowerCase()){
-                    return item.rate2
-                }
-                if(item.recommender3.toLowerCase() == state.account.toLowerCase()){
-                    return item.rate3
-                }
-                if(item.recommender4.toLowerCase() == state.account.toLowerCase()){
-                    return item.rate4
-                }
-                if(item.recommender5.toLowerCase() == state.account.toLowerCase()){
-                    return item.rate5
-                }
-                if(item.recommender6.toLowerCase() == state.account.toLowerCase()){
-                    return item.rate6
-                }
-                if(item.recommender7.toLowerCase() == state.account.toLowerCase()){
-                    return item.rate7
+            for(let j=0;j<7;j++){
+                if(item.addr.toString().toLowerCase() == address.toString().toLowerCase()){
+                    if(item["recommender" + j].toString().toLowerCase() == state.account.toString().toLowerCase()){
+                        return item["rate"+j]
+                    }
                 }
             }
         }
@@ -460,7 +442,6 @@ const OGPoolPublic = (props) => {
             let myTeamRecord = []
 
             // count my team level number
-
             let levelRewardObj = {
                 level1Total: 0,
                 level2Total: 0,
@@ -504,7 +485,7 @@ const OGPoolPublic = (props) => {
                 const item = myTeamArr[i]
                 allRecords.forEach(async record => {
                     if (item._user.toLowerCase() == record.addr.toLowerCase()) {
-                        let rate =await getLevelInviteRate(item._user)
+                        let rate = await getLevelInviteRate(item._user) / 100
                         if(!rate){
                             rate = 0
                         }
@@ -514,22 +495,19 @@ const OGPoolPublic = (props) => {
                         obj.flmIncome = BigNumber(record.fdtAmount).multipliedBy(rate).dividedBy(100).dividedBy(10 ** FLMDecimals).toString()
                         totalUSDT = BigNumber(totalUSDT).plus(obj.usdtIncome)
                         totalFLM = BigNumber(totalFLM).plus(obj.flmIncome)
-                        console.log(obj)
-                        if (obj.level) {
-                            obj.rate = rate
-                            myTeamRecord.push(obj)
-                        }
+                        console.log(rate)
+                        obj.rate = rate
+                        myTeamRecord.push(obj)
                     }
                 })
             }
-            console.log(myTeamRecord,myTeamArr,levelRewardObj,totalFLM,totalUSDT)
             if(myTeamArr.length==0){
                 setMyTeamArr(myTeamArr)
             }
-            if(myTeamRecord.length==0){
+            setTimeout(()=>{
                 setMyTeamRecord(myTeamRecord)
+            })
 
-            }
             setLevelCountObj(levelRewardObj)
             setRewardTotalFLM(totalFLM.toString())
             setRewardTotalUSDT(totalUSDT.toString())
@@ -570,9 +548,12 @@ const OGPoolPublic = (props) => {
     }
 
     useEffect(async () => {
-        getMyTeam(state.account)
+        if(inviteRecordArr.length>0){
+            getMyTeam(state.account)
 
-    }, [inviteRateArr]);
+        }
+
+    }, [inviteRecordArr]);
     useEffect(() => {
         setCurAddress(state.account)
         getData()
@@ -1107,7 +1088,14 @@ const OGPoolPublic = (props) => {
                                             <strong>Level5</strong>
                                             <span>{levelCountObj.level5Total}</span>
                                         </div>
-
+                                        <div className="info-item">
+                                            <strong>Level6</strong>
+                                            <span>{levelCountObj.level6Total}</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <strong>Level7</strong>
+                                            <span>{levelCountObj.level7Total}</span>
+                                        </div>
                                     </div>
                                     <form className="search-box">
                                         <Input style={{borderRadius: '50px'}} allowClear value={searchData}
@@ -1227,7 +1215,7 @@ const OGPoolPublic = (props) => {
                                 </div>
 
                                 {
-                                    myTeamRecord.length>0 && myTeamRecord.map((item, index) => (
+                                     myTeamRecord.map((item, index) => (
                                         index >= pageCount * (curPage - 1) && index < pageCount * curPage &&
                                         <div className="list-item" key={index}>
                                             <div className="col no">
