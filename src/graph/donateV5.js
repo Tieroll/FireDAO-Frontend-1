@@ -15,6 +15,7 @@ export function getDonateRecord() {
         }`
     }, "")
 }
+
 export function getAllInvites() {
     return fetchQueryBase("patton-sr/og4", {
         text: `{
@@ -121,6 +122,7 @@ export function getRecommender(address) {
         }`
     }, "")
 }
+
 export function getAddressFromId(id) {
     return fetchQueryBase("patton-sr/og4", {
         text: `{

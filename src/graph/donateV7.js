@@ -1,9 +1,10 @@
 import {fetchQueryBase} from "./index";
 
 let name = "patton-sr/ogtest"
-if(process.env.NODE_ENV === "development"){
+if (process.env.NODE_ENV === "development") {
     name = "patton-sr/ogtest1"
 }
+
 export function getDonateRecord() {
     return fetchQueryBase(name, {
         text: `{
@@ -48,6 +49,7 @@ export function getAllInvites() {
         `
     }, "")
 }
+
 export function getBlackUsers() {
     return fetchQueryBase(name, {
         text: ` {
@@ -59,6 +61,7 @@ export function getBlackUsers() {
             }`
     }, "")
 }
+
 export function getAllFlmRate() {
     return fetchQueryBase(name, {
         text: `{\t\t\t\t\t
