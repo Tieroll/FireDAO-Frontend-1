@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useConnect} from "../../../../api/contracts";
 import BigNumber from "bignumber.js"
-import AddNomalWhiteList from "../../OGPool/ThreelWhiteList";
-import AddThreeWhiteList from "../../OGPool/components/OgAdminLevel2";
+
 import {formatAddress} from "../../../../utils/publicJs";
 
 import {
@@ -17,8 +16,7 @@ import {useNavigate} from "react-router-dom";
 import judgeStatus from "../../../../utils/judgeStatus";
 import {getDonateRecord, getAllRegisters} from "../../../../graph/donateV9";
 import OGUserAdminStyle from "./TeamIncomeStyle.js";
-import OgSetActive from "../../OGPool/components/OgSetActive";
-import OgSetBlacklist from "../../OGPool/components/OgSetBlacklist";
+
 import FDTIcon from "../../../../imgs/fdt.png";
 import ethereum from "../../../../imgs/ethereum.png";
 import {ETHDecimals, FDTDecimals, FLMDecimals, USDTDecimals} from "../../../../config/constants";
